@@ -1,0 +1,7 @@
+{
+  "name": "FMC Asaba - Official Website Proposal",
+  "description": "Modern website UI proposal for Federal Medical Centre Asaba featuring an organic split-hero layout, Medical Director welcome, and an angled dynamic news carousel with reactive gradient backdrop.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
