@@ -4,9 +4,10 @@ import { Department, DepartmentContent } from '../data/departments';
 interface DepartmentWriteupProps {
   department: Department;
   content: DepartmentContent;
+  onBackToDepartmentsList?: () => void;
 }
 
-export function DepartmentWriteup({ department, content }: DepartmentWriteupProps) {
+export function DepartmentWriteup({ department, content, onBackToDepartmentsList }: DepartmentWriteupProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = async () => {
@@ -67,10 +68,20 @@ export function DepartmentWriteup({ department, content }: DepartmentWriteupProp
             <button
               id="back-to-departments-btn"
               type="button"
-                  onClick={() => {
-                    window.history.pushState({}, '', '/');
-                    window.dispatchEvent(new PopStateEvent('popstate'));
-                  }}
+              onClick={() => {
+                if (onBackToDepartmentsList) {
+                  onBackToDepartmentsList();
+                } else {
+                  window.history.pushState({}, '', '/#departments-section');
+                  window.dispatchEvent(new PopStateEvent('popstate'));
+                  setTimeout(() => {
+                    const el = document.getElementById('departments-section');
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }, 120);
+                }
+              }}
               className="w-full flex items-center justify-center gap-2.5 px-5 py-3.5 bg-[#107c41] hover:bg-[#0d6837] text-white font-medium text-[15px] sm:text-[16px] rounded-lg shadow-lg hover:shadow-emerald-900/30 transition-all duration-200 cursor-pointer text-center group"
             >
               <svg

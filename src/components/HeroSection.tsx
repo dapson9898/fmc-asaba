@@ -52,7 +52,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section
       id="fmc-hero-section"
-      className="relative w-full min-h-[calc(100vh-5rem)] lg:h-[calc(100vh-5rem)] overflow-hidden flex flex-col justify-between transition-colors duration-1000 ease-in-out"
+      className="relative w-full min-h-screen 2xl:h-screen pt-20 overflow-hidden flex flex-col justify-between transition-colors duration-1000 ease-in-out"
       style={{
         backgroundColor: '#f8fafc',
       }}
@@ -69,16 +69,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         }}
       />
 
-      {/* Main 2-column split container with imaginary division */}
-      <div className="relative z-10 w-full h-full flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-y-auto lg:overflow-hidden">
+      {/* Main flex container: stacked below each other on mobile & standard desktops, side-by-side only on 2xl screens */}
+      <div className="relative z-10 w-full h-full flex-1 flex flex-col 2xl:flex-row overflow-y-auto 2xl:overflow-hidden">
 
         {/* =========================================================================
             LEFT-HAND SIDE (WELCOME MESSAGE & MD WELCOME - FAITHFUL TO FMC REFERENCE)
-            Takes 5 columns on laptop
             ========================================================================= */}
         <div
           id="hero-left-side"
-          className="lg:col-span-5 xl:col-span-5 relative z-10 flex flex-col justify-center px-6 sm:px-10 lg:pl-12 lg:pr-8 py-8 lg:py-6"
+          className="w-full 2xl:w-[42%] 2xl:shrink-0 relative z-10 flex flex-col justify-center px-6 sm:px-10 2xl:pl-12 2xl:pr-8 py-8 2xl:py-6"
         >
           {/* Subtle Organic Mint Shapes in Left Background */}
           <div className="absolute top-0 left-0 w-80 h-80 bg-emerald-100/40 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
@@ -148,10 +147,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* =========================================================================
             IMAGINARY / ORGANIC CURVED DIVISION BETWEEN LEFT & RIGHT
             SVG Wave boundary running down the screen - no harsh vertical line!
+            Visible only on 2xl screens when side-by-side
             ========================================================================= */}
         <div
           id="hero-imaginary-divider"
-          className="hidden lg:block absolute inset-y-0 left-[41.666%] w-24 -translate-x-1/2 pointer-events-none z-20 overflow-hidden"
+          className="hidden 2xl:block absolute inset-y-0 left-[42%] w-24 -translate-x-1/2 pointer-events-none z-20 overflow-hidden"
         >
           <svg
             className="h-full w-full"
@@ -184,11 +184,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* =========================================================================
             RIGHT-HAND SIDE (DYNAMIC GALLERY & ANGLED VERTICAL CAROUSEL)
-            Takes 7 columns on laptop, takes 100% height, shifts gradient dynamically
+            Full-width below left side on mobile/desktop, side-by-side on 2xl screens
             ========================================================================= */}
         <div
           id="hero-right-side"
-          className="lg:col-span-7 xl:col-span-7 relative z-10 flex flex-col justify-between p-6 sm:p-8 lg:p-10 min-h-[500px] lg:min-h-0 overflow-hidden text-white transition-all duration-1000 ease-in-out"
+          className="w-full 2xl:w-[58%] 2xl:flex-1 relative z-10 flex flex-col justify-between p-6 sm:p-8 2xl:p-10 min-h-[550px] 2xl:min-h-0 overflow-hidden text-white transition-all duration-1000 ease-in-out"
           style={{
             background: `linear-gradient(135deg, ${activeArticle.gradient.from} 0%, ${activeArticle.gradient.via} 50%, ${activeArticle.gradient.to} 100%)`,
           }}

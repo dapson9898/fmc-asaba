@@ -10,6 +10,21 @@ interface NewsArticleModalProps {
 export const NewsArticleModal: React.FC<NewsArticleModalProps> = ({ article, onClose }) => {
   const [copied, setCopied] = React.useState(false);
 
+  React.useEffect(() => {
+    if (article) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') onClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [article, onClose]);
+
   if (!article) return null;
 
   const handleCopyLink = () => {
@@ -21,13 +36,16 @@ export const NewsArticleModal: React.FC<NewsArticleModalProps> = ({ article, onC
   return (
     <div
       id="news-article-modal"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-fade-in overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-slate-950/80 backdrop-blur-md p-3 sm:p-6"
       onClick={onClose}
     >
-      <div
-        className="relative w-full max-w-3xl my-8 bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="min-h-full flex items-center justify-center py-4 sm:py-8">
+        <div
+          className="relative w-full max-w-3xl my-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-200"
+          onClick={(e) => e.stopPropagation()}
+        >
         {/* Header Hero Image */}
         <div className="relative h-64 sm:h-80 w-full overflow-hidden">
           <img
@@ -130,6 +148,7 @@ export const NewsArticleModal: React.FC<NewsArticleModalProps> = ({ article, onC
             Federal Medical Centre Asaba • Official Communication Bureau
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
