@@ -234,7 +234,7 @@ export function DepartmentsPage() {
         )}
 
         {/* Quick Help & Emergency Note Footer */}
-        <div className="mt-12 text-center border-t border-slate-200 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        {/* <div className="mt-12 text-center border-t border-slate-200 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>
             Need assistance finding a specialist or scheduling a clinical consultation?
           </p>
@@ -245,7 +245,7 @@ export function DepartmentsPage() {
             <span>Call FMC Clinical Helpdesk: +234 803 555 3622</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </a>
-        </div>
+        </div> */}
       </div>
     </section>
   );

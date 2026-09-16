@@ -203,11 +203,10 @@ export const GetInTouchSection: React.FC = () => {
                         setCaptchaInput(e.target.value);
                         setCaptchaError(false);
                       }}
-                      className={`w-32 px-3.5 py-2.5 bg-white border rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none shadow-2xs ${
-                        captchaError
+                      className={`w-32 px-3.5 py-2.5 bg-white border rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none shadow-2xs ${captchaError
                           ? 'border-red-400 ring-2 ring-red-400/20'
                           : 'border-slate-200 focus:border-emerald-600'
-                      }`}
+                        }`}
                     />
                   </div>
 

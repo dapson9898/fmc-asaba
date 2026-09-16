@@ -202,10 +202,11 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 id="nav-news-btn"
-                onClick={() => {
-                  onViewChange('news-page');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
+                // onClick={() => {
+                //   onViewChange('news-page');
+                //   window.scrollTo({ top: 0, behavior: 'smooth' });
+                // }}
+                onClick={() => scrollToSection('hero-right-side', 'hero')}
                 className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
                   currentView === 'news-page'
                     ? 'bg-emerald-700 text-white shadow-xs'
@@ -219,6 +220,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 id="nav-team-btn"
+                // onClick={() => scrollToSection('departments-section')}
                 onClick={() => scrollToSection('management-section')}
                 className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
                   isDarkDetailView

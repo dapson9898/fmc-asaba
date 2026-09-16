@@ -1,5 +1,5 @@
-import benjaminPortrait from '../assets/images/benjamin_yakubu_1788948517030.jpg';
-import teamPhoto from '../assets/images/it_team_members_1788948535881.jpg';
+const benjaminPortrait = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789595014/mr_benjamin_lddhnb.jpg';
+const teamPhoto = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789595121/team_photo_bkv8ug.jpg';
 
 export interface DepartmentService {
   title: string;

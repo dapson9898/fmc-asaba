@@ -122,7 +122,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreDepartments
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <button
+              {/* <button
                 onClick={() => {
                   const el = document.getElementById('departments-section');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -131,7 +131,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreDepartments
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm transition-colors cursor-pointer"
               >
                 <span>Explore Clinical Services</span>
-              </button>
+              </button> */}
             </div>
           </div>
 

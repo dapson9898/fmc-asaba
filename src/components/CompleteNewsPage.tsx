@@ -36,7 +36,7 @@ export const CompleteNewsPage: React.FC<CompleteNewsPageProps> = ({
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 text-slate-700 font-semibold text-sm hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300 shadow-xs transition-all"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to FMC Homepage & Hero Proposal
+            Back to Homepage
           </button>
 
           <div className="flex items-center gap-2 text-xs font-semibold text-emerald-800 bg-emerald-100/60 px-3.5 py-1.5 rounded-full">

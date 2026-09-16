@@ -98,7 +98,7 @@ export const ManagementSection: React.FC<ManagementSectionProps> = ({ onContactS
                       }`}
                     >
                       {isMd ? <Award className="w-3 h-3 text-amber-300" /> : <ShieldCheck className="w-3 h-3" />}
-                      <span>{isMd ? 'Chief Executive' : member.category}</span>
+                      {/* <span>{isMd ? 'Chief Executive' : member.category}</span> */}
                     </span>
                   </div>
 
