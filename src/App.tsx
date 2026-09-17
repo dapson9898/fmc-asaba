@@ -16,9 +16,9 @@ import { SearchModal } from './components/SearchModal';
 import { ProposalBar } from './components/ProposalBar';
 import { AboutSection } from './components/AboutSection';
 import { ManagementSection } from './components/ManagementSection';
-import { DepartmentsPage } from './components/DepartmentsPage';
+import { DepartmentsPage } from './components/DepartmentsSection';
 import { RecruitmentsSection } from './components/RecruitmentsSection';
-import { GetInTouchSection } from './components/GetInTouchSection';
+import { GetInTouchSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { BackgroundVideo } from './components/BackgroundVideo';
 import { DepartmentWriteup } from './components/DepartmentWriteup';
@@ -153,6 +153,9 @@ export default function App() {
               <>
                 <HeroSection
                   onOpenReachUs={() => setIsReachUsOpen(true)}
+                  onScrollToContact={() => {
+                    document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
                   onGoToCompleteNews={() => {
                     setCurrentView('news-page');
                     window.scrollTo({ top: 0, behavior: 'smooth' });

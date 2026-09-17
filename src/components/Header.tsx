@@ -189,18 +189,6 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
 
               <button
-                id="nav-about-btn"
-                onClick={() => scrollToSection('about-section', 'hero')}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                  isDarkDetailView
-                    ? 'text-slate-100 hover:text-white hover:bg-white/15'
-                    : 'text-slate-900 hover:text-emerald-800 hover:bg-emerald-50'
-                }`}
-              >
-                About
-              </button>
-
-              <button
                 id="nav-news-btn"
                 // onClick={() => {
                 //   onViewChange('news-page');
@@ -216,6 +204,18 @@ export const Header: React.FC<HeaderProps> = ({
                 }`}
               >
                 News
+              </button>
+
+              <button
+                id="nav-about-btn"
+                onClick={() => scrollToSection('about-section', 'hero')}
+                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
+                  isDarkDetailView
+                    ? 'text-slate-100 hover:text-white hover:bg-white/15'
+                    : 'text-slate-900 hover:text-emerald-800 hover:bg-emerald-50'
+                }`}
+              >
+                About
               </button>
 
               <button
@@ -375,12 +375,12 @@ export const Header: React.FC<HeaderProps> = ({
           <nav className="mt-2 sm:mt-6 space-y-0.5 sm:space-y-1">
             {[
               { id: 'home', label: 'Home', icon: Building, action: handleHomeClick, active: currentView === 'hero' && currentPath === '/' },
-              { id: 'about', label: 'About FMC Asaba', icon: Building, action: () => scrollToSection('about-section', 'hero') },
-              { id: 'news', label: 'News & Bulletins', icon: Newspaper, action: () => { onViewChange('news-page'); setIsMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }, active: currentView === 'news-page' },
+              { id: 'news', label: 'News', icon: Newspaper, action: () => { onViewChange('news-page'); setIsMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }, active: currentView === 'news-page' },
+              { id: 'about', label: 'About', icon: Building, action: () => scrollToSection('about-section', 'hero') },
               { id: 'management', label: 'Management Team', icon: Users, action: () => scrollToSection('management-section') },
-              { id: 'departments', label: 'Clinical Departments', icon: Layers, action: () => scrollToSection('departments-section') },
-              { id: 'gallery', label: 'Photo Gallery', icon: ImageIcon, action: () => scrollToSection('hero-right-side', 'hero') },
-              { id: 'contact', label: 'Contact & Inquiries', icon: Mail, action: () => scrollToSection('contact-section', 'hero') },
+              { id: 'departments', label: 'Departments', icon: Layers, action: () => scrollToSection('departments-section') },
+              { id: 'gallery', label: 'Gallery', icon: ImageIcon, action: () => scrollToSection('hero-right-side', 'hero') },
+              { id: 'contact', label: 'Contact', icon: Mail, action: () => scrollToSection('contact-section', 'hero') },
             ].map((item) => {
               const Icon = item.icon;
               return (
@@ -449,7 +449,7 @@ export const Header: React.FC<HeaderProps> = ({
               <span>24/7 Trauma Hotline</span>
             </div>
             <p className="text-lg sm:text-xl font-bold text-white font-mono tracking-tight">
-              +234 803 555 FMC
+              +234 916 781 0386
             </p>
             <p className="text-[11px] sm:text-xs text-emerald-100/70">
               Immediate response for accident, emergency &amp; ambulance dispatches.
@@ -541,23 +541,17 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="p-6 space-y-3">
               {[
                 {
-                  title: 'Patient & NHIS Health Portal',
-                  desc: 'Check laboratory results, prescription refills & clinic appointments.',
-                  badge: 'Patients',
+                  title: 'Program officers.',
+                  desc: 'Upload gallery and news contents.',
+                  badge: 'Admin',
                   color: 'emerald',
                 },
                 {
-                  title: 'Medical Staff & Clinical Intranet',
-                  desc: 'Access electronic health records (EMR), inpatient wards & duty rosters.',
-                  badge: 'Consultants & Nurses',
+                  title: 'IT Officer.',
+                  desc: 'Manage admin and content.',
+                  badge: 'Super admin',
                   color: 'blue',
-                },
-                {
-                  title: 'Residency Training & Academic Portal',
-                  desc: 'Postgraduate training logs, library archives & CME lecture schedules.',
-                  badge: 'Residents & Interns',
-                  color: 'slate',
-                },
+                }
               ].map((portal, idx) => (
                 <div
                   key={idx}
@@ -585,7 +579,7 @@ export const Header: React.FC<HeaderProps> = ({
               ))}
 
               <div className="pt-2 text-center text-xs text-slate-400">
-                Need help accessing your hospital account? Call the ICT Unit at ext. 402 or visit the Administration block.
+                Need help accessing your hospital account? Call the ICT Unit or visit the Administration block.
               </div>
             </div>
           </div>

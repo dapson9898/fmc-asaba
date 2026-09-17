@@ -18,12 +18,14 @@ import { AngledVerticalCarousel } from './AngledVerticalCarousel';
 
 interface HeroSectionProps {
   onOpenReachUs: () => void;
+  onScrollToContact: () => void;
   onGoToCompleteNews: () => void;
   onOpenArticle: (article: NewsArticle) => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenReachUs,
+  onScrollToContact,
   onGoToCompleteNews,
   onOpenArticle,
 }) => {
@@ -107,7 +109,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {/* Reach us today! Button (From FMC reference) */}
               <button
                 id="hero-reach-us-btn"
-                onClick={onOpenReachUs}
+                onClick={onScrollToContact}
                 className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base shadow-lg shadow-emerald-700/25 hover:shadow-xl hover:shadow-emerald-700/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
               >
                 <span>Reach us today!</span>
