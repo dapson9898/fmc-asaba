@@ -23,27 +23,156 @@ interface HeaderProps {
   onViewChange: (view: ViewMode) => void;
   onOpenSearch?: () => void;
   onOpenEmergency: () => void;
+  currentPath?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentView,
   onViewChange,
-  onOpenEmergency
+  onOpenEmergency,
+  currentPath: propCurrentPath,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isPortalModalOpen, setIsPortalModalOpen] = React.useState(false);
-  const [currentPath, setCurrentPath] = React.useState(window.location.pathname);
+  const [currentPath, setCurrentPath] = React.useState(propCurrentPath ?? window.location.pathname);
 
-  // Scroll transparency detector: fully transparent at top, smoothly frosted on scroll
   React.useEffect(() => {
+    if (propCurrentPath !== undefined) {
+      setCurrentPath(propCurrentPath);
+    }
+  }, [propCurrentPath]);
+
+  // Active section tracking for nav list (scroll-spy)
+  const [activeSection, setActiveSection] = React.useState<string>(() => {
+    if (window.location.pathname === '/gallery') return 'gallery';
+    if (window.location.pathname.startsWith('/departments/')) return 'departments';
+    if (currentView === 'news-page') return 'news';
+    return 'home';
+  });
+
+  const isProgrammaticScroll = React.useRef(false);
+  const programmaticScrollTimer = React.useRef<NodeJS.Timeout | null>(null);
+
+  // High precision active section calculation based on current viewport & document scroll
+  const getActiveSection = React.useCallback((): string => {
+    const pathname = window.location.pathname;
+    if (pathname === '/gallery' || currentPath === '/gallery') return 'gallery';
+    if (pathname.startsWith('/departments/')) return 'departments';
+    if (currentView === 'news-page') return 'news';
+
+    // If pathname is root '/', never treat as department detail view
+    if (pathname !== '/' && currentPath.startsWith('/departments/')) return 'departments';
+
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    // Check if scrolled near the bottom of document (Contact is the lowest major section)
+    if (windowHeight + scrollY >= documentHeight - 90) {
+      return 'contact';
+    }
+
+    // Check if at the top of document
+    if (scrollY < 120) {
+      return 'home';
+    }
+
+    // Check primary homepage sections in reverse order (bottom to top)
+    const sections = [
+      { id: 'contact', elId: 'contact-section' },
+      { id: 'departments', elId: 'departments-section' },
+      { id: 'management', elId: 'management-section' },
+      { id: 'about', elId: 'about-section' },
+      { id: 'home', elId: 'fmc-hero-section' }
+    ];
+
+    const headerLine = 150; // Just below the fixed navbar
+
+    // Priority 1: Direct viewport occupancy under header
+    for (const s of sections) {
+      const el = document.getElementById(s.elId);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= headerLine && rect.bottom > headerLine) {
+          return s.id;
+        }
+      }
+    }
+
+    // Priority 2: Handling transition areas (e.g. Recruitments notice between Departments and Contact)
+    const contactEl = document.getElementById('contact-section');
+    if (contactEl) {
+      const cRect = contactEl.getBoundingClientRect();
+      if (cRect.top <= windowHeight * 0.6) {
+        return 'contact';
+      }
+    }
+
+    for (const s of sections) {
+      const el = document.getElementById(s.elId);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= headerLine) {
+          return s.id;
+        }
+      }
+    }
+
+    return 'home';
+  }, [currentPath, currentView]);
+
+  // Scroll listener with requestAnimationFrame for smooth, non-blocking ScrollSpy
+  React.useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+
+      if (!isProgrammaticScroll.current && !ticking) {
+        window.requestAnimationFrame(() => {
+          const detected = getActiveSection();
+          setActiveSection(detected);
+
+          // Update URL hash dynamically on homepage so the URL never stays hardcoded to a section
+          if (window.location.pathname === '/' && currentView === 'hero') {
+            const targetHash =
+              detected === 'home' ? '' :
+              detected === 'about' ? '#about-section' :
+              detected === 'management' ? '#management-section' :
+              detected === 'departments' ? '#departments-section' :
+              detected === 'contact' ? '#contact-section' : '';
+
+            const currentHash = window.location.hash;
+            if (currentHash !== targetHash) {
+              const newUrl = targetHash ? `/${targetHash}` : '/';
+              window.history.replaceState(null, '', newUrl);
+            }
+          }
+
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
+
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [getActiveSection, currentView]);
+
+  // Update active section on route or view mode changes
+  React.useEffect(() => {
+    if (currentPath === '/gallery' || window.location.pathname === '/gallery') {
+      setActiveSection('gallery');
+    } else if (window.location.pathname.startsWith('/departments/') || (currentPath.startsWith('/departments/') && window.location.pathname !== '/')) {
+      setActiveSection('departments');
+    } else if (currentView === 'news-page') {
+      setActiveSection('news');
+    } else {
+      setActiveSection(getActiveSection());
+    }
+  }, [currentPath, currentView, getActiveSection]);
 
   // Update currentPath on route changes
   React.useEffect(() => {
@@ -77,21 +206,45 @@ export const Header: React.FC<HeaderProps> = ({
 
   const handleHomeClick = () => {
     setIsMobileMenuOpen(false);
-    if (window.location.pathname !== '/') {
+    setActiveSection('home');
+    isProgrammaticScroll.current = true;
+    if (programmaticScrollTimer.current) clearTimeout(programmaticScrollTimer.current);
+    programmaticScrollTimer.current = setTimeout(() => {
+      isProgrammaticScroll.current = false;
+    }, 900);
+
+    if (window.location.pathname !== '/' || window.location.hash !== '') {
       window.history.pushState({}, '', '/');
       window.dispatchEvent(new PopStateEvent('popstate'));
       setCurrentPath('/');
     }
-    onViewChange('hero');
+    if (currentView !== 'hero') {
+      onViewChange('hero');
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const scrollToSection = (id: string, fallbackView: ViewMode = 'hero') => {
+  const scrollToSection = (id: string, fallbackView: ViewMode = 'hero', sectionKey?: string) => {
     setIsMobileMenuOpen(false);
-    if (window.location.pathname !== '/') {
-      window.history.pushState({}, '', `/#${id}`);
+
+    // Provide immediate active state highlight upon clicking
+    if (sectionKey) {
+      setActiveSection(sectionKey);
+      isProgrammaticScroll.current = true;
+      if (programmaticScrollTimer.current) clearTimeout(programmaticScrollTimer.current);
+      programmaticScrollTimer.current = setTimeout(() => {
+        isProgrammaticScroll.current = false;
+      }, 900);
+    }
+
+    const targetUrl = `/#${id}`;
+    if (window.location.pathname !== '/' || window.location.hash !== `#${id}`) {
+      window.history.pushState({}, '', targetUrl);
       window.dispatchEvent(new PopStateEvent('popstate'));
       setCurrentPath('/');
+    }
+
+    if (currentView !== fallbackView) {
       onViewChange(fallbackView);
       setTimeout(() => {
         const el = document.getElementById(id);
@@ -101,24 +254,22 @@ export const Header: React.FC<HeaderProps> = ({
       }, 150);
       return;
     }
-    if (currentView === fallbackView) {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
+
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    onViewChange(fallbackView);
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 150);
   };
 
   const handleGalleryClick = () => {
     setIsMobileMenuOpen(false);
+    setActiveSection('gallery');
+    isProgrammaticScroll.current = true;
+    if (programmaticScrollTimer.current) clearTimeout(programmaticScrollTimer.current);
+    programmaticScrollTimer.current = setTimeout(() => {
+      isProgrammaticScroll.current = false;
+    }, 900);
+
     if (window.location.pathname !== '/gallery') {
       window.history.pushState({}, '', '/gallery');
       window.dispatchEvent(new PopStateEvent('popstate'));
@@ -128,7 +279,33 @@ export const Header: React.FC<HeaderProps> = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isDarkDetailView = currentPath.startsWith('/departments/') && !isScrolled;
+  const handleNewsClick = () => {
+    setIsMobileMenuOpen(false);
+    setActiveSection('news');
+    if (window.location.pathname !== '/' || window.location.hash !== '') {
+      window.history.pushState({}, '', '/');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+      setCurrentPath('/');
+    }
+    onViewChange('news-page');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const isDepartmentDetail = (currentPath.startsWith('/departments/') || window.location.pathname.startsWith('/departments/')) && window.location.pathname !== '/';
+  const isDarkDetailView = isDepartmentDetail && !isScrolled;
+
+  const getNavButtonClasses = (sectionKey: string) => {
+    const isActive = activeSection === sectionKey;
+    if (isActive) {
+      return isDarkDetailView
+        ? 'bg-emerald-600 text-white shadow-xs font-semibold'
+        : 'bg-emerald-700 text-white shadow-xs font-semibold';
+    }
+    if (isDarkDetailView) {
+      return 'text-slate-100 hover:text-white hover:bg-white/15 font-medium';
+    }
+    return 'text-slate-800 hover:text-emerald-800 hover:bg-emerald-50/80 font-medium';
+  };
 
   return (
     <>
@@ -188,68 +365,39 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="nav-home-btn"
                 onClick={handleHomeClick}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                  currentView === 'hero' && currentPath === '/'
-                    ? 'bg-emerald-700 text-white shadow-xs'
-                    : isDarkDetailView
-                    ? 'text-slate-100 hover:text-white hover:bg-white/15'
-                    : 'text-slate-900 hover:text-emerald-800 hover:bg-emerald-50'
-                }`}
+                className={`px-3.5 py-1.5 rounded-full text-sm transition-all cursor-pointer ${getNavButtonClasses('home')}`}
               >
                 Home
               </button>
 
               <button
                 id="nav-news-btn"
-                // onClick={() => {
-                //   onViewChange('news-page');
-                //   window.scrollTo({ top: 0, behavior: 'smooth' });
-                // }}
-                onClick={() => scrollToSection('hero-right-side', 'hero')}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
-                  currentView === 'news-page'
-                    ? 'bg-emerald-700 text-white shadow-xs'
-                    : isDarkDetailView
-                    ? 'text-slate-100 hover:text-white hover:bg-white/15'
-                    : 'text-slate-900 hover:text-emerald-800 hover:bg-emerald-50'
-                }`}
+                onClick={handleNewsClick}
+                className={`px-3.5 py-1.5 rounded-full text-sm transition-all flex items-center gap-1.5 cursor-pointer ${getNavButtonClasses('news')}`}
               >
                 News
               </button>
 
               <button
                 id="nav-about-btn"
-                onClick={() => scrollToSection('about-section', 'hero')}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                  isDarkDetailView
-                    ? 'text-slate-100 hover:text-white hover:bg-white/15'
-                    : 'text-slate-900 hover:text-emerald-800 hover:bg-emerald-50'
-                }`}
+                onClick={() => scrollToSection('about-section', 'hero', 'about')}
+                className={`px-3.5 py-1.5 rounded-full text-sm transition-all cursor-pointer ${getNavButtonClasses('about')}`}
               >
                 About
               </button>
 
               <button
                 id="nav-team-btn"
-                // onClick={() => scrollToSection('departments-section')}
-                onClick={() => scrollToSection('management-section')}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                  isDarkDetailView
-                    ? 'text-slate-100 hover:text-white hover:bg-white/15'
-                    : 'text-slate-900 hover:text-emerald-800 hover:bg-emerald-50'
-                }`}
+                onClick={() => scrollToSection('management-section', 'hero', 'management')}
+                className={`px-3.5 py-1.5 rounded-full text-sm transition-all cursor-pointer ${getNavButtonClasses('management')}`}
               >
                 Management Team
               </button>
 
               <button
                 id="nav-dept-btn"
-                onClick={() => scrollToSection('departments-section')}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                  isDarkDetailView
-                    ? 'text-slate-100 hover:text-white hover:bg-white/15'
-                    : 'text-slate-900 hover:text-emerald-800 hover:bg-emerald-50'
-                }`}
+                onClick={() => scrollToSection('departments-section', 'hero', 'departments')}
+                className={`px-3.5 py-1.5 rounded-full text-sm transition-all cursor-pointer ${getNavButtonClasses('departments')}`}
               >
                 Departments
               </button>
@@ -257,25 +405,15 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 id="nav-gallery-btn"
                 onClick={handleGalleryClick}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                  currentPath === '/gallery'
-                    ? 'bg-emerald-700 text-white shadow-xs'
-                    : isDarkDetailView
-                    ? 'text-slate-100 hover:text-white hover:bg-white/15'
-                    : 'text-slate-900 hover:text-emerald-800 hover:bg-emerald-50'
-                }`}
+                className={`px-3.5 py-1.5 rounded-full text-sm transition-all cursor-pointer ${getNavButtonClasses('gallery')}`}
               >
                 Gallery
               </button>
 
               <button
                 id="nav-contact-btn"
-                onClick={() => scrollToSection('contact-section', 'hero')}
-                className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                  isDarkDetailView
-                    ? 'text-slate-100 hover:text-white hover:bg-white/15'
-                    : 'text-slate-900 hover:text-emerald-800 hover:bg-emerald-50'
-                }`}
+                onClick={() => scrollToSection('contact-section', 'hero', 'contact')}
+                className={`px-3.5 py-1.5 rounded-full text-sm transition-all cursor-pointer ${getNavButtonClasses('contact')}`}
               >
                 Contact
               </button>
@@ -387,32 +525,40 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Navigation Menu Items (Unnumbered for clean mobile and tablet experience) */}
           <nav className="mt-2 sm:mt-6 space-y-0.5 sm:space-y-1">
             {[
-              { id: 'home', label: 'Home', icon: Building, action: handleHomeClick, active: currentView === 'hero' && currentPath === '/' },
-              { id: 'news', label: 'News', icon: Newspaper, action: () => { onViewChange('news-page'); setIsMobileMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }, active: currentView === 'news-page' },
-              { id: 'about', label: 'About', icon: Building, action: () => scrollToSection('about-section', 'hero') },
-              { id: 'management', label: 'Management Team', icon: Users, action: () => scrollToSection('management-section') },
-              { id: 'departments', label: 'Departments', icon: Layers, action: () => scrollToSection('departments-section') },
-              { id: 'gallery', label: 'Gallery', icon: ImageIcon, action: handleGalleryClick, active: currentPath === '/gallery' },
-              { id: 'contact', label: 'Contact', icon: Mail, action: () => scrollToSection('contact-section', 'hero') },
+              { id: 'home', label: 'Home', icon: Building, action: handleHomeClick, active: activeSection === 'home' },
+              { id: 'news', label: 'News', icon: Newspaper, action: handleNewsClick, active: activeSection === 'news' },
+              { id: 'about', label: 'About', icon: Building, action: () => scrollToSection('about-section', 'hero', 'about'), active: activeSection === 'about' },
+              { id: 'management', label: 'Management Team', icon: Users, action: () => scrollToSection('management-section', 'hero', 'management'), active: activeSection === 'management' },
+              { id: 'departments', label: 'Departments', icon: Layers, action: () => scrollToSection('departments-section', 'hero', 'departments'), active: activeSection === 'departments' },
+              { id: 'gallery', label: 'Gallery', icon: ImageIcon, action: handleGalleryClick, active: activeSection === 'gallery' },
+              { id: 'contact', label: 'Contact', icon: Mail, action: () => scrollToSection('contact-section', 'hero', 'contact'), active: activeSection === 'contact' },
             ].map((item) => {
               const Icon = item.icon;
               return (
                 <button
                   key={item.id}
                   onClick={item.action}
-                  className={`w-full group flex items-center justify-between py-1.5 sm:py-2.5 px-2.5 sm:px-3 rounded-xl text-left transition-all cursor-pointer ${
+                  className={`w-full group flex items-center justify-between py-2 sm:py-2.5 px-3 rounded-xl text-left transition-all cursor-pointer ${
                     item.active
-                      ? 'bg-emerald-50 text-emerald-800 font-semibold'
-                      : 'text-slate-700 hover:text-emerald-800 hover:bg-slate-50'
+                      ? 'bg-emerald-50 text-emerald-900 font-bold border-l-4 border-emerald-600 shadow-2xs'
+                      : 'text-slate-700 hover:text-emerald-800 hover:bg-slate-50 font-medium'
                   }`}
                 >
                   <div className="flex items-center gap-2.5 sm:gap-3">
-                    <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-emerald-600/80 group-hover:text-emerald-700 shrink-0 transition-colors" />
+                    <Icon className={`w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0 transition-colors ${
+                      item.active ? 'text-emerald-700' : 'text-emerald-600/80 group-hover:text-emerald-700'
+                    }`} />
                     <span className="text-xs sm:text-base lg:text-lg font-heading tracking-tight group-hover:translate-x-1 transition-transform">
                       {item.label}
                     </span>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition-all opacity-0 group-hover:opacity-100" />
+                  {item.active ? (
+                    <span className="flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-100/90 px-2 py-0.5 rounded-full">
+                      Active
+                    </span>
+                  ) : (
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-700 group-hover:translate-x-0.5 transition-all opacity-0 group-hover:opacity-100" />
+                  )}
                 </button>
               );
             })}

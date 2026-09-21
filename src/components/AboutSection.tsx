@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Eye, Compass, ShieldCheck, ArrowRight, X, Calendar, CheckCircle2, Award, Building, Sparkles } from 'lucide-react';
 import aboutImage from '../assets/images/fmc_about_nurses.jpg';
 
@@ -169,19 +170,19 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreDepartments
         </div>
       </div>
 
-      {/* Comprehensive "Learn More About FMC Asaba" Institutional Modal */}
-      {isModalOpen && (
+      {/* Comprehensive "Learn More About FMC Asaba" Institutional Modal (Portaled to document.body to prevent sibling section stacking issues) */}
+      {isModalOpen && typeof document !== 'undefined' && createPortal(
         <div
           id="about-institutional-modal"
           role="dialog"
           aria-modal="true"
           aria-labelledby="about-modal-title"
-          className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain bg-slate-950/80 backdrop-blur-md p-3 sm:p-6"
+          className="fixed inset-0 z-[120] overflow-y-auto overscroll-contain bg-slate-950/85 backdrop-blur-md p-3 sm:p-6 animate-in fade-in duration-200"
           onClick={() => setIsModalOpen(false)}
         >
           <div className="min-h-full flex items-center justify-center py-4 sm:py-8">
             <div
-              className="relative w-full max-w-3xl my-auto bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[calc(100dvh-2.5rem)] sm:max-h-[88vh] animate-in fade-in zoom-in-95 duration-200"
+              className="relative w-full max-w-3xl my-auto bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[calc(100dvh-2.5rem)] sm:max-h-[88vh] animate-in zoom-in-95 duration-200"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
@@ -209,66 +210,67 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreDepartments
 
               {/* Content Body */}
               <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6 text-slate-700 text-sm leading-relaxed">
-              <div className="space-y-3">
-                <h4 className="text-base font-bold text-slate-900 font-heading flex items-center gap-2">
-                  <Building className="w-4 h-4 text-emerald-700" />
-                  Origin &amp; Historical Trajectory
-                </h4>
-                <p className="text-slate-600 leading-relaxed">
-                  Federal Medical Centre, Asaba was established in August, 1998 pursuant to the policy of the Federal Government to provide a Federal Medical Centre in any state of the federation lacking a Federal Teaching Hospital. The centre transitioned seamlessly from the former Central Hospital Asaba, inheriting its foundational legacy while aggressively upgrading its infrastructure into a modern tertiary facility.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs uppercase mb-1">
-                    <Calendar className="w-4 h-4" />
-                    <span>Key Milestones</span>
-                  </div>
-                  <ul className="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
-                    <li>August 1998: Formal takeover &amp; federal commissioning.</li>
-                    <li>2005: Full accreditation for Family Medicine residency.</li>
-                    <li>2018: Expansion of specialized Intensive Care Units (ICU).</li>
-                    <li>2023: Commissioning of cutting-edge Diagnostic Suites.</li>
-                  </ul>
+                <div className="space-y-3">
+                  <h4 className="text-base font-bold text-slate-900 font-heading flex items-center gap-2">
+                    <Building className="w-4 h-4 text-emerald-700" />
+                    Origin &amp; Historical Trajectory
+                  </h4>
+                  <p className="text-slate-600 leading-relaxed">
+                    Federal Medical Centre, Asaba was established in August, 1998 pursuant to the policy of the Federal Government to provide a Federal Medical Centre in any state of the federation lacking a Federal Teaching Hospital. The centre transitioned seamlessly from the former Central Hospital Asaba, inheriting its foundational legacy while aggressively upgrading its infrastructure into a modern tertiary facility.
+                  </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs uppercase mb-1">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Statutory Mandate</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs uppercase mb-1">
+                      <Calendar className="w-4 h-4" />
+                      <span>Key Milestones</span>
+                    </div>
+                    <ul className="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                      <li>August 1998: Formal takeover &amp; federal commissioning.</li>
+                      <li>2005: Full accreditation for Family Medicine residency.</li>
+                      <li>2018: Expansion of specialized Intensive Care Units (ICU).</li>
+                      <li>2023: Commissioning of cutting-edge Diagnostic Suites.</li>
+                    </ul>
                   </div>
-                  <ul className="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
-                    <li>Comprehensive multi-specialty clinical care.</li>
-                    <li>Residency training for doctors, nurses, &amp; allied staff.</li>
-                    <li>Clinical research &amp; disease surveillance (CDCR).</li>
-                    <li>Community health extension and immunization outreach.</li>
-                  </ul>
+
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs uppercase mb-1">
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>Statutory Mandate</span>
+                    </div>
+                    <ul className="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                      <li>Comprehensive multi-specialty clinical care.</li>
+                      <li>Residency training for doctors, nurses, &amp; allied staff.</li>
+                      <li>Clinical research &amp; disease surveillance (CDCR).</li>
+                      <li>Community health extension and immunization outreach.</li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
 
-              <div className="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200/80">
-                <h4 className="text-sm font-bold text-emerald-950 mb-2 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-emerald-700" />
-                  Patients' Right &amp; Service Charter
-                </h4>
-                <p className="text-xs sm:text-sm text-emerald-900 leading-relaxed">
-                  FMC Asaba is dedicated to compassionate, non-discriminatory, prompt medical care. Through SERVICOM and the Clinical Audit Directorate, every patient is guaranteed transparent treatment protocols, dignified attention, and accessible grievance channels.
-                </p>
-              </div>
+                <div className="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200/80">
+                  <h4 className="text-sm font-bold text-emerald-950 mb-2 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-emerald-700" />
+                    Patients' Right &amp; Service Charter
+                  </h4>
+                  <p className="text-xs sm:text-sm text-emerald-900 leading-relaxed">
+                    FMC Asaba is dedicated to compassionate, non-discriminatory, prompt medical care. Through SERVICOM and the Clinical Audit Directorate, every patient is guaranteed transparent treatment protocols, dignified attention, and accessible grievance channels.
+                  </p>
+                </div>
 
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-6 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs transition-colors shadow-xs cursor-pointer"
-                >
-                  Close Institutional Overview
-                </button>
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-6 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs transition-colors shadow-xs cursor-pointer"
+                  >
+                    Close Institutional Overview
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-          </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

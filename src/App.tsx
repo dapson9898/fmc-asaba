@@ -39,9 +39,17 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const [currentPath, setCurrentPath] = React.useState(window.location.pathname);
 
+  const navigate = (url: string, view: ViewMode = 'hero') => {
+    setCurrentView(view);
+    window.history.pushState({}, '', url);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+    setCurrentPath(window.location.pathname);
+  };
+
   const handleBackToDepartments = () => {
     setCurrentView('hero');
     window.history.pushState({}, '', '/#departments-section');
+    window.dispatchEvent(new PopStateEvent('popstate'));
     setCurrentPath('/');
     setTimeout(() => {
       const deptSection = document.getElementById('departments-section');
@@ -101,6 +109,7 @@ export default function App() {
         onViewChange={(view) => setCurrentView(view)}
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenEmergency={() => setIsReachUsOpen(true)}
+        currentPath={currentPath}
       />
 
       {department && content ? (
@@ -117,32 +126,24 @@ export default function App() {
           </section>
           <Footer
             onNavigateHome={() => {
-              window.history.pushState({}, '', '/');
-              setCurrentPath('/');
-              setCurrentView('hero');
+              navigate('/');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onNavigateAbout={() => {
-              window.history.pushState({}, '', '/#about-section');
-              setCurrentPath('/');
-              setCurrentView('hero');
+              navigate('/#about-section');
               setTimeout(() => {
                 document.getElementById('about-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }, 120);
             }}
             onNavigateDepartments={handleBackToDepartments}
             onNavigateContact={() => {
-              window.history.pushState({}, '', '/#contact-section');
-              setCurrentPath('/');
-              setCurrentView('hero');
+              navigate('/#contact-section');
               setTimeout(() => {
                 document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }, 120);
             }}
             onNavigateNews={() => {
-              window.history.pushState({}, '', '/');
-              setCurrentPath('/');
-              setCurrentView('news-page');
+              navigate('/', 'news-page');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           />
@@ -152,33 +153,20 @@ export default function App() {
           <Gallery />
           <Footer
             onNavigateHome={() => {
-              window.history.pushState({}, '', '/');
-              setCurrentPath('/');
-              setCurrentView('hero');
+              navigate('/');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onNavigateAbout={() => {
-              window.history.pushState({}, '', '/#about-section');
-              setCurrentPath('/');
-              setCurrentView('hero');
+              navigate('/#about-section');
               setTimeout(() => document.getElementById('about-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
             }}
-            onNavigateDepartments={() => {
-              window.history.pushState({}, '', '/#departments-section');
-              setCurrentPath('/');
-              setCurrentView('hero');
-              setTimeout(() => document.getElementById('departments-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
-            }}
+            onNavigateDepartments={handleBackToDepartments}
             onNavigateContact={() => {
-              window.history.pushState({}, '', '/#contact-section');
-              setCurrentPath('/');
-              setCurrentView('hero');
+              navigate('/#contact-section');
               setTimeout(() => document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
             }}
             onNavigateNews={() => {
-              window.history.pushState({}, '', '/');
-              setCurrentPath('/');
-              setCurrentView('news-page');
+              navigate('/', 'news-page');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           />

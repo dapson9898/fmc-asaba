@@ -37,7 +37,7 @@ export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
       className="relative flex flex-col items-center justify-center select-none"
     >
       {/* Top Carousel Nav Controls */}
-      <div className="flex items-center justify-between w-full max-w-[320px] mb-2 px-2 z-20">
+      <div className="flex items-center justify-between w-full max-w-[270px] xl:max-w-[320px] mb-2 px-2 z-20">
         <span className="text-[11px] font-bold uppercase tracking-widest text-white/70 flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           Up Next in Feed
@@ -72,7 +72,7 @@ export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
       </div>
 
       {/* Tilted / Angled Container */}
-      <div className="relative w-full max-w-[330px] overflow-hidden py-3">
+      <div className="relative w-full max-w-[280px] xl:max-w-[330px] overflow-hidden py-2 xl:py-3">
         {/* Subtle Angle Skew Transform */}
         <div
           ref={scrollContainerRef}
@@ -88,7 +88,7 @@ export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
                 key={article.id}
                 id={`carousel-item-${idx}`}
                 onClick={() => onSelectArticle(idx)}
-                className={`group relative cursor-pointer rounded-xl p-3 transition-all duration-500 backdrop-blur-md border ${
+                className={`group relative cursor-pointer rounded-xl p-2 xl:p-3 transition-all duration-500 backdrop-blur-md border ${
                   isActive
                     ? 'bg-white/20 border-white/60 shadow-xl shadow-black/40 scale-102 translate-x-1.5'
                     : 'bg-black/30 border-white/10 hover:bg-white/10 hover:border-white/30 opacity-70 hover:opacity-95'
@@ -107,7 +107,7 @@ export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
 
                 <div className="flex items-center gap-3 pl-1">
                   {/* Thumbnail */}
-                  <div className="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 border border-white/20 shadow-xs">
+                  <div className="relative w-11 h-11 xl:w-14 xl:h-14 rounded-lg overflow-hidden shrink-0 border border-white/20 shadow-xs">
                     <img
                       src={article.image}
                       alt={article.title}

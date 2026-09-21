@@ -40,7 +40,8 @@ export const NEWS_ARTICLES: NewsArticle[] = [
       glow: "rgba(16, 185, 129, 0.28)"
     },
     keyTakeaway: "Average post-operative recovery reduced by 60% with state-of-the-art keyhole surgical technologies.",
-    tags: ["Surgery", "Clinical Excellence", "Tertiary Care", "Innovation"]
+    tags: ["Surgery", "Clinical Excellence", "Tertiary Care", "Innovation"],
+    featuredInHero: true
   },
   {
     id: "fmc-new-diagnostic-mri",
@@ -68,7 +69,8 @@ export const NEWS_ARTICLES: NewsArticle[] = [
       glow: "rgba(6, 182, 212, 0.25)"
     },
     keyTakeaway: "24/7 precision diagnostic imaging with automated cloud tele-reporting for urgent trauma cases.",
-    tags: ["Radiology", "MRI", "Diagnostics", "Technology"]
+    tags: ["Radiology", "MRI", "Diagnostics", "Technology"],
+    featuredInHero: true
   },
   {
     id: "fmc-maternal-child-wing",
@@ -96,7 +98,8 @@ export const NEWS_ARTICLES: NewsArticle[] = [
       glow: "rgba(244, 63, 94, 0.25)"
     },
     keyTakeaway: "Expanded 35-bed tertiary NICU reducing neonatal complications through round-the-clock specialist care.",
-    tags: ["Pediatrics", "Maternal Care", "NICU", "Healthcare"]
+    tags: ["Pediatrics", "Maternal Care", "NICU", "Healthcare"],
+    featuredInHero: true
   },
   {
     id: "fmc-campus-infrastructure-upgrade",
@@ -124,7 +127,8 @@ export const NEWS_ARTICLES: NewsArticle[] = [
       glow: "rgba(59, 130, 246, 0.25)"
     },
     keyTakeaway: "1.2MW green solar microgrid delivers uninterrupted power to life-support systems and theatres.",
-    tags: ["Infrastructure", "Solar Power", "Campus", "Development"]
+    tags: ["Infrastructure", "Solar Power", "Campus", "Development"],
+    featuredInHero: false
   },
   {
     id: "fmc-community-health-outreach",
@@ -152,6 +156,17 @@ export const NEWS_ARTICLES: NewsArticle[] = [
       glow: "rgba(245, 158, 11, 0.25)"
     },
     keyTakeaway: "3,500+ residents screened with free prescriptions, cataract glasses, and preventative care.",
-    tags: ["Outreach", "Public Health", "Community", "Delta State"]
+    tags: ["Outreach", "Public Health", "Community", "Delta State"],
+    featuredInHero: false
   }
 ];
+
+/**
+ * Helper function that returns only news articles approved for the Hero carousel.
+ * You can set `featuredInHero: true` on any article in NEWS_ARTICLES to display it
+ * on the hero section. All other articles remain visible on the Complete News page.
+ */
+export const getHeroNewsArticles = (): NewsArticle[] => {
+  const allowed = NEWS_ARTICLES.filter((article) => article.featuredInHero === true);
+  return allowed.length > 0 ? allowed : NEWS_ARTICLES.slice(0, 3);
+};

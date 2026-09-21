@@ -15,10 +15,15 @@ export const CompleteNewsPage: React.FC<CompleteNewsPageProps> = ({
   const [selectedCategory, setSelectedCategory] = React.useState<string>('All');
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
-  const categories = ['All', 'Clinical Breakthrough', 'Diagnostic Tech', 'Maternal Health', 'Campus Development', 'Community Outreach'];
+  const categories = ['All', 'Hero Spotlight', 'Clinical Breakthrough', 'Diagnostic Tech', 'Maternal Health', 'Campus Development', 'Community Outreach'];
 
   const filteredArticles = NEWS_ARTICLES.filter((article) => {
-    const matchesCategory = selectedCategory === 'All' || article.category === selectedCategory;
+    const matchesCategory =
+      selectedCategory === 'All'
+        ? true
+        : selectedCategory === 'Hero Spotlight'
+        ? article.featuredInHero === true
+        : article.category === selectedCategory;
     const matchesSearch =
       article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       article.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -106,10 +111,16 @@ export const CompleteNewsPage: React.FC<CompleteNewsPageProps> = ({
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-3 left-3">
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap max-w-[90%]">
                   <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/90 backdrop-blur-md text-emerald-800 shadow-xs">
                     {article.category}
                   </span>
+                  {article.featuredInHero && (
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-400 text-slate-900 shadow-xs flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-slate-800" />
+                      Hero Carousel
+                    </span>
+                  )}
                 </div>
               </div>
 

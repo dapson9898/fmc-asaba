@@ -20,6 +20,7 @@ export interface NewsArticle {
   };
   keyTakeaway?: string;
   tags: string[];
+  featuredInHero?: boolean;
 }
 
 export type ViewMode = 'hero' | 'news-page';
