@@ -1,7 +1,7 @@
 import { NewsArticle } from '../types';
 
 export const MD_INFO = {
-  name: "Dr. Victor Omo Ekenam",
+  name: "Dr. Omo Ekeneam",
   title: "Medical Director & Chief Executive Officer",
   credentials: "MBBS, FWACS, FICS, FMCS",
   quote: "Welcome to the Federal Medical Centre, Asaba where world-class healthcare meets a magnificent atmosphere of truly outstanding service.",
@@ -29,7 +29,7 @@ export const NEWS_ARTICLES: NewsArticle[] = [
     content: [
       "In a major clinical milestone for healthcare delivery in Delta State and the South-South region, Federal Medical Centre (FMC) Asaba has successfully performed its 200th advanced minimally invasive laparoscopic surgical procedure.",
       "The dedicated team of general surgeons, pediatric surgeons, and anesthesiologists utilized high-definition laparoscopy towers recently commissioned under the Federal Government's tertiary healthcare upgrade grant.",
-      "According to the Medical Director, Dr. Victor Omo Ekenam, patients who previously spent seven to ten days recovering from open abdominal procedures are now discharged in good health within 48 to 72 hours with minimal post-operative discomfort.",
+      "According to the Medical Director, Dr. Omo Ekeneam, patients who previously spent seven to ten days recovering from open abdominal procedures are now discharged in good health within 48 to 72 hours with minimal post-operative discomfort.",
       "The centre continues to receive referrals across Anambra, Edo, and Delta states, establishing Asaba as a premier clinical surgical hub in Nigeria."
     ],
     gradient: {
