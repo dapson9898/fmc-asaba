@@ -22,6 +22,7 @@ import { GetInTouchSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { BackgroundVideo } from './components/BackgroundVideo';
 import { DepartmentWriteup } from './components/DepartmentWriteup';
+import Gallery from './components/Gallery';
 import { DEPARTMENTS, getDepartmentContent } from './data/departments';
 
 
@@ -90,6 +91,7 @@ export default function App() {
     ? getDepartmentFromPath()
     : null;
   const content = department ? getDepartmentContent(department.id) : null;
+  const isGalleryPage = currentPath === '/gallery';
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 selection:bg-emerald-600 selection:text-white">
@@ -145,6 +147,42 @@ export default function App() {
             }}
           />
         </main>
+      ) : isGalleryPage ? (
+        <>
+          <Gallery />
+          <Footer
+            onNavigateHome={() => {
+              window.history.pushState({}, '', '/');
+              setCurrentPath('/');
+              setCurrentView('hero');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onNavigateAbout={() => {
+              window.history.pushState({}, '', '/#about-section');
+              setCurrentPath('/');
+              setCurrentView('hero');
+              setTimeout(() => document.getElementById('about-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+            }}
+            onNavigateDepartments={() => {
+              window.history.pushState({}, '', '/#departments-section');
+              setCurrentPath('/');
+              setCurrentView('hero');
+              setTimeout(() => document.getElementById('departments-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+            }}
+            onNavigateContact={() => {
+              window.history.pushState({}, '', '/#contact-section');
+              setCurrentPath('/');
+              setCurrentView('hero');
+              setTimeout(() => document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+            }}
+            onNavigateNews={() => {
+              window.history.pushState({}, '', '/');
+              setCurrentPath('/');
+              setCurrentView('news-page');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        </>
       ) : (
         <>
           {/* Main Viewport Content */}

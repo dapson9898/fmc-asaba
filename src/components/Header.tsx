@@ -117,6 +117,17 @@ export const Header: React.FC<HeaderProps> = ({
     }, 150);
   };
 
+  const handleGalleryClick = () => {
+    setIsMobileMenuOpen(false);
+    if (window.location.pathname !== '/gallery') {
+      window.history.pushState({}, '', '/gallery');
+      window.dispatchEvent(new PopStateEvent('popstate'));
+      setCurrentPath('/gallery');
+    }
+    onViewChange('hero');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const isDarkDetailView = currentPath.startsWith('/departments/') && !isScrolled;
 
   return (
@@ -245,9 +256,11 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 id="nav-gallery-btn"
-                onClick={() => scrollToSection('hero-right-side', 'hero')}
+                onClick={handleGalleryClick}
                 className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                  isDarkDetailView
+                  currentPath === '/gallery'
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : isDarkDetailView
                     ? 'text-slate-100 hover:text-white hover:bg-white/15'
                     : 'text-slate-900 hover:text-emerald-800 hover:bg-emerald-50'
                 }`}
@@ -379,7 +392,7 @@ export const Header: React.FC<HeaderProps> = ({
               { id: 'about', label: 'About', icon: Building, action: () => scrollToSection('about-section', 'hero') },
               { id: 'management', label: 'Management Team', icon: Users, action: () => scrollToSection('management-section') },
               { id: 'departments', label: 'Departments', icon: Layers, action: () => scrollToSection('departments-section') },
-              { id: 'gallery', label: 'Gallery', icon: ImageIcon, action: () => scrollToSection('hero-right-side', 'hero') },
+              { id: 'gallery', label: 'Gallery', icon: ImageIcon, action: handleGalleryClick, active: currentPath === '/gallery' },
               { id: 'contact', label: 'Contact', icon: Mail, action: () => scrollToSection('contact-section', 'hero') },
             ].map((item) => {
               const Icon = item.icon;
