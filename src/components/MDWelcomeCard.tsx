@@ -61,14 +61,6 @@ export const MDWelcomeCard: React.FC<MDWelcomeCardProps> = ({ onLearnMore }) => 
               </p>
             </div>
 
-            {/* {onLearnMore && (
-              <button
-                onClick={onLearnMore}
-                className="text-xs font-semibold text-emerald-700 hover:text-emerald-800 hover:underline flex items-center gap-1"
-              >
-                Full Profile & Vision
-              </button>
-            )} */}
           </div>
         </div>
       </div>

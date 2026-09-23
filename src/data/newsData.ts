@@ -1,4 +1,5 @@
 import { NewsArticle } from '../types';
+import mdimage from '../assets/images/fmc_management_md.jpg'
 
 export const MD_INFO = {
   name: "Dr. Omo Ekeneam",
@@ -6,7 +7,7 @@ export const MD_INFO = {
   credentials: "MBBS, FWACS, FICS, FMCS",
   quote: "Welcome to the Federal Medical Centre, Asaba where world-class healthcare meets a magnificent atmosphere of truly outstanding service.",
   subquote: "Our mission is dedicated to providing compassionate, tertiary clinical care, cutting-edge medical training, and pace-setting diagnostic accuracy for Delta State and Nigeria.",
-  image: "https://res.cloudinary.com/dk59pn2dq/image/upload/v1789594945/fmc_management_md_ypx4gg.jpg",
+  image: mdimage,
   hospitalName: "Federal Medical Centre Asaba",
   state: "Delta State, Nigeria",
   contactHotline: "+234 (0) 803 555 3622",
@@ -33,7 +34,7 @@ export const NEWS_ARTICLES: NewsArticle[] = [
       "The centre continues to receive referrals across Anambra, Edo, and Delta states, establishing Asaba as a premier clinical surgical hub in Nigeria."
     ],
     gradient: {
-      from: "#032b1b",
+      from: "#03441b",
       via: "#064e3b",
       to: "#022c22",
       accent: "#10b981",

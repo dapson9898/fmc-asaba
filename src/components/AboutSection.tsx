@@ -123,16 +123,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreDepartments
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              {/* <button
-                onClick={() => {
-                  const el = document.getElementById('departments-section');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  else if (onExploreDepartments) onExploreDepartments();
-                }}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm transition-colors cursor-pointer"
-              >
-                <span>Explore Clinical Services</span>
-              </button> */}
             </div>
           </div>
 
@@ -161,7 +151,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreDepartments
                 </div>
                 <div>
                   <p className="text-xs font-bold text-slate-900 leading-tight">Serving Since 1998</p>
-                  <p className="text-[11px] text-slate-500 font-medium">Over 25 Years of Healing</p>
+                  <p className="text-[11px] text-slate-500 font-medium">{new Date().getFullYear() - 1998} Years of Healing</p>
                 </div>
               </div>
             </div>

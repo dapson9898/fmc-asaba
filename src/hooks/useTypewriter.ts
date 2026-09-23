@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 export function useTypewriter(
   text: string,
   speed = 38,
-  startDelay = 600,
+  startDelay = 100,
 ): { displayed: string; done: boolean } {
   const [displayed, setDisplayed] = useState('');
   const [done, setDone] = useState(false);

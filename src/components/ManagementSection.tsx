@@ -215,24 +215,16 @@ export const ManagementSection: React.FC<ManagementSectionProps> = ({ onContactS
                   </ul>
                 </div>
 
-                {/* Direct Secretariat Contact */}
+                {/* Direct Office Contact */}
                 <div className="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-100/80 flex items-center gap-2.5 text-xs text-slate-700">
                   <Mail className="w-4 h-4 text-emerald-700 shrink-0" />
-                  <span className="truncate">Official Secretariat: <strong className="text-slate-900 font-semibold">{selectedMember.contactEmail}</strong></span>
+                  <span className="truncate">Official Email: <strong className="text-slate-900 font-semibold">{selectedMember.contactEmail}</strong></span>
                 </div>
               </div>
 
               {/* Fixed Bottom Action Footer - Always visible and accessible */}
               <div className="shrink-0 bg-slate-50 px-4 py-3 sm:px-6 sm:py-4 border-t border-slate-200 flex items-center justify-between gap-3">
-                <button
-                  onClick={() => {
-                    setSelectedMember(null);
-                    if (onContactSecretary) onContactSecretary();
-                  }}
-                  className="flex-1 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:scale-98 text-white font-semibold text-xs sm:text-sm transition-all shadow-xs cursor-pointer text-center"
-                >
-                  Contact Office
-                </button>
+                
                 <button
                   onClick={() => setSelectedMember(null)}
                   className="px-5 py-2.5 rounded-xl bg-slate-200/90 hover:bg-slate-300 active:scale-98 text-slate-800 font-semibold text-xs sm:text-sm transition-all cursor-pointer"

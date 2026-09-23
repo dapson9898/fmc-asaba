@@ -1,12 +1,30 @@
-const benjaminPortrait = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789595014/mr_benjamin_lddhnb.jpg';
-const itTeamPhoto = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789595121/team_photo_bkv8ug.jpg';
-const surgeryTheatreImage = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789596073/fmc_surgery_theatre_1788968805901_joz0eq.jpg';
-const radiologyMriImage = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789596129/fmc_mri_radiology_1788968834247_omrckh.jpg';
-const pediatricCareImage = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789596085/fmc_pediatric_care_1788968843820_p8q44j.jpg';
-const communityHealthImage = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789596101/fmc_community_health_1788968883248_wuhxoc.jpg';
-const hospitalComplexImage = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789596115/fmc_hospital_complex_1788968818176_f8qep4.jpg';
-const nursesTeamImage = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789594928/fmc_about_nurses_h5k7pm.jpg';
 const scannerVideoUrl = 'https://res.cloudinary.com/dk59pn2dq/video/upload/v1788944118/Medical_scanner_product_reveal_a__202609090918_g6cgi2.mp4';
+const fmcemail= 'info@fmcasaba.org';
+
+import defaultprofile from '../assets/images/profile.jpg';
+import itTeamPhoto from '../assets/images/it_team_members_1788948535881.jpg';
+import aePortrait from '../assets/images/A&E.jpg';
+import anaPortrait from '../assets/images/HOD anasthesia.jpg';
+import cdcrPortrait from '../assets/images/CDC.jpg';
+import denPortrait from '../assets/images/HOD dentistry.jpg';
+import heamPortrait from  '../assets/images/HOD haematology.jpg'
+import recPortrait from '../assets/images/HOD_health_records.jpg'
+import interPortrait from '../assets/images/HOD_internal_medicine.jpg'
+import opthaPortrait from '../assets/images/HOD_opthamology.jpg'
+import paedPortrait from '../assets/images/HOD_paediatrics.jpg'
+import pathPortrait from '../assets/images/HOD_pathology.jpg'
+import physioPortrait from '../assets/images/profile.jpg'
+import pubPortrait from '../assets/images/HOD_public_heslth.jpg'
+import radPortrait from '../assets/images/HOD_radiology.jpg'
+import surgPortrait from '../assets/images/HOD_surgery.jpg'
+import famPortrait from '../assets/images/HOD_family_medicine.jpg'
+import ictPortrait from '../assets/images/hod_ict.jpg'
+import nursePortrait from '../assets/images/HOD_nursing.jpg'
+import pharmPortrait from '../assets/images/profile.jpg'
+import seviPortrait from '../assets/images/profile.jpg'
+import audPortrait from '../assets/images/HOD_internal_audit.jpg'
+import socialPortrait from '../assets/images/profile.jpg'
+import storePortrait from '../assets/images/HOD_stores.jpg'
 
 export interface DepartmentService {
   title: string;
@@ -18,6 +36,7 @@ export interface Department {
   name: string;
   category: string;
   head: string;
+  title: string;
 }
 
 export interface DepartmentContent {
@@ -33,28 +52,28 @@ export interface DepartmentContent {
 }
 
 export const DEPARTMENTS: Department[] = [
-  { id: 'accident-emergency', name: 'Accident and Emergency', category: 'Emergency and acute care', head: 'Head of Accident and Emergency' },
-  { id: 'cdcr', name: 'Centre for Disease Control and Research (CDCR)', category: 'Disease control and research', head: 'Head of CDCR' },
-  { id: 'anaesthesia-intensive-care', name: 'Department of Anaesthesia and Intensive Care', category: 'Perioperative and critical care', head: 'Head of Anaesthesia and Intensive Care' },
-  { id: 'dentistry', name: 'Department of Dentistry', category: 'Dental and oral health', head: 'Head of Dentistry' },
-  { id: 'haematology', name: 'Department of Haematology', category: 'Blood disorders and laboratory medicine', head: 'Head of Haematology' },
-  { id: 'health-records', name: 'Department of Health Records and Information Management', category: 'Health records and information management', head: 'Head of Health Records' },
-  { id: 'internal-medicine', name: 'Department of Internal Medicine', category: 'Adult medical care', head: 'Head of Internal Medicine' },
-  { id: 'ophthalmology', name: 'Department of Ophthalmology', category: 'Eye care and vision services', head: 'Head of Ophthalmology' },
-  { id: 'paediatrics', name: 'Department of Paediatrics', category: 'Child and adolescent health', head: 'Head of Paediatrics' },
-  { id: 'pathology', name: 'Department of Pathology', category: 'Diagnostic laboratory services', head: 'Head of Pathology' },
-  { id: 'physiotherapy', name: 'Department of Physiotherapy', category: 'Rehabilitation and physical therapy', head: 'Head of Physiotherapy' },
-  { id: 'public-health', name: 'Department of Public Health', category: 'Population and preventive health', head: 'Head of Public Health' },
-  { id: 'radiology', name: 'Department of Radiology', category: 'Diagnostic imaging', head: 'Head of Radiology' },
-  { id: 'surgery', name: 'Department of Surgery', category: 'Surgical care and procedures', head: 'Head of Surgery' },
-  { id: 'family-medicine', name: 'Family Medicine Department', category: 'Comprehensive primary care', head: 'Head of Family Medicine' },
-  { id: 'information-technology', name: 'Information Technology Department', category: 'Digital infrastructure and data systems', head: 'Benjamin Yakubu' },
-  { id: 'internal-audit', name: 'Internal Audit Department', category: 'Governance and assurance', head: 'Head of Internal Audit' },
-  { id: 'nursing-services', name: 'Nursing Services Department', category: 'Patient care and nursing services', head: 'Head of Nursing Services' },
-  { id: 'pharmacy', name: 'Pharmacy Department', category: 'Medicines and pharmaceutical care', head: 'Head of Pharmacy' },
-  { id: 'servicom', name: 'SERVICOM in FMC Asaba', category: 'Service quality and citizen relations', head: 'SERVICOM Nodal Officer' },
-  { id: 'social-welfare', name: 'Social Welfare Department', category: 'Patient support and social care', head: 'Head of Social Welfare' },
-  { id: 'stores-supplies', name: 'Stores and Supplies', category: 'Procurement and hospital logistics', head: 'Head of Stores and Supplies' },
+  { id: 'accident-emergency', name: 'Accident and Emergency', category: 'Emergency and acute care', head: 'Dr Chukwuemeka I. Chibuzo', title:'HOD Accident and Emergency | Consultant Orthopedic and Traumatology Surgeon' },
+  { id: 'cdcr', name: 'Centre for Disease Control and Research (CDCR)', category: 'Disease control and research', head: 'Dr. Ugoeze Francis', title:'Director, CDCR' },
+  { id: 'anaesthesia-intensive-care', name: 'Department of Anaesthesia and Intensive Care', category: 'Perioperative and critical care', head: 'DR. OYEWALE A. O', title:'CONSULTANT ANAESTHETIST' },
+  { id: 'dentistry', name: 'Department of Dentistry', category: 'Dental and oral health', head: 'Dr EMUALOSI PEDRO OSEGI', title: 'HEAD, DENTISTRY DEPT CONSULTANT, ORAL AND MAXILLOFACIAL SURGEON' },
+  { id: 'haematology', name: 'Department of Haematology', category: 'Blood disorders and laboratory medicine', head: 'Dr. Charles E. Origbo (FMCPath)', title:'' },
+  { id: 'health-records', name: 'Department of Health Records and Information Management', category: 'Health records and information management', head: 'Egli, Paul O. (RHRM)', title:'AD/HOD: Health Records & Information Mgt.' },
+  { id: 'internal-medicine', name: 'Department of Internal Medicine', category: 'Adult medical care', head: 'Dr. Ugoeze Francis C.', title:'HOD Internal Medicine' },
+  { id: 'ophthalmology', name: 'Department of Ophthalmology', category: 'Eye care and vision services', head: 'Dr Akinyemi Adedeji', title:'HOD Ophthalmology' },
+  { id: 'paediatrics', name: 'Department of Paediatrics', category: 'Child and adolescent health', head: 'Dr Efe Erhinyaye Omoyibo', title:'' },
+  { id: 'pathology', name: 'Department of Pathology', category: 'Diagnostic laboratory services', head: 'Dr. Chukwuemeka Okoye', title:'' },
+  { id: 'physiotherapy', name: 'Department of Physiotherapy', category: 'Rehabilitation and physical therapy', head: 'Dr Utomi', title:'' },
+  { id: 'public-health', name: 'Department of Public Health', category: 'Population and preventive health', head: 'Dr (Mrs) Adesuwa Aigbokhaode', title:'' },
+  { id: 'radiology', name: 'Department of Radiology', category: 'Diagnostic imaging', head: 'Dr Promise Okojie', title:'' },
+  { id: 'surgery', name: 'Department of Surgery', category: 'Surgical care and procedures', head: 'DR.EMEAGUI NNAEMEKA KENNEDY', title:'' },
+  { id: 'family-medicine', name: 'Family Medicine Department', category: 'Comprehensive primary care', head: 'Dr. Nneoma Chinweokwu', title:'' },
+  { id: 'information-technology', name: 'Information Technology Department', category: 'Digital infrastructure and data systems', head: 'Benjamin Yakubu', title:'Head of Department, IT' },
+  { id: 'internal-audit', name: 'Internal Audit Department', category: 'Governance and assurance', head: 'Mrs Rosemary Ofodile', title:'' },
+  { id: 'nursing-services', name: 'Nursing Services Department', category: 'Patient care and nursing services', head: 'Mrs T Agbele', title:'Deputy Director of Nursing Services' },
+  { id: 'pharmacy', name: 'Pharmacy Department', category: 'Medicines and pharmaceutical care', head: 'Pharmacist Dr. Christopher .A. Ujomu.', title:'' },
+  { id: 'servicom', name: 'SERVICOM in FMC Asaba', category: 'Service quality and citizen relations', head: 'SERVICOM Nodal Officer', title:'' },
+  { id: 'social-welfare', name: 'Social Welfare Department', category: 'Patient support and social care', head: 'Mr Henry Okonkwo', title:'' },
+  { id: 'stores-supplies', name: 'Stores and Supplies', category: 'Procurement and hospital logistics', head: 'Mr Olorunfunmi Ajesi', title:'Chief Store Officer, Head of Department' },
 ];
 
 export const DEFAULT_DEPARTMENT = DEPARTMENTS.find(
@@ -67,20 +86,14 @@ export const DEFAULT_DEPARTMENT = DEPARTMENTS.find(
  */
 export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
   'accident-emergency': {
-    overview: 'The Accident and Emergency (A&E) Department of FMC Asaba provides 24-hour round-the-clock emergency medical, surgical, and trauma care with rapid triage and immediate resuscitation protocols.',
-    introduction: 'Operating as the primary acute frontline of the medical centre, the department collaborates with intensive care, trauma surgery, and diagnostics to stabilize critical patients swiftly and effectively.',
+    overview: 'The Accident and Emergency is the heart and gate way into our hospital for infectious and non-infectious diseases. Accident and Emergency is the first point of contact for all external patients referred or admitted into the hospital. We have both the adult and pediatric wings in the same magnificent structure.',
+    introduction: 'We are saddled with the responsibility of receiving, sorting(triaging), resuscitation and stabilization of all trauma and medical emergency patients. We have state of the art ambulance services, paramedics, well trained trauma nurses, orthopedic plaster technicians and doctors which form a team. We have a purpose-built functional unit with a dedicated pharmacy, laboratory, radiology unit and theatre which helps improve our efficiency in service delivery. We take pride in our unique role, staff support system and flexible service delivery.',
     vision: 'To provide gold-standard emergency and critical resuscitation services with minimal door-to-treatment intervals, compassionate care, and zero tolerance for preventable emergency delays.',
-    contactEmail: 'ae@fmcasaba.org',
-    portrait: benjaminPortrait,
+    contactEmail: fmcemail,
+    portrait: aePortrait,
     teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
-    services: [
-      { title: '24/7 Trauma & Resuscitation', description: 'Immediate clinical stabilization of multi-trauma, head injuries, and acute surgical emergencies.' },
-      { title: 'Medical Emergency Triage', description: 'Rapid assessment and urgent therapy for acute myocardial infarction, acute stroke, and respiratory failure.' },
-      { title: 'Minor Procedure Theatre', description: 'Emergency wound debridement, suturing, fracture splinting, and immediate pain alleviation.' },
-      { title: 'Critical Observation Unit', description: 'Short-stay high-dependency monitoring for evolving acute medical and surgical cases.' },
-      { title: 'Ambulance & Pre-Hospital Transfer', description: 'Coordinated patient retrieval and inter-facility emergency patient transport.' },
-    ],
+    services: [],
     stats: [
       { value: '24/7', label: 'Emergency Coverage' },
       { value: '< 10m', label: 'Triage Response', accent: true },
@@ -92,8 +105,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'CDCR partners with national and international health agencies to monitor infectious disease trends, run molecular diagnostics, and train healthcare workers in epidemic preparedness.',
     vision: 'To remain a leading sentinel hub for biomedical research, infectious disease vigilance, and evidence-based outbreak control in the South-South and across Nigeria.',
     contactEmail: 'cdcr@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: communityHealthImage,
+    portrait: cdcrPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Infectious Disease Surveillance', description: 'Active tracking, data reporting, and epidemiological mapping of emerging communicable pathogens.' },
@@ -113,8 +126,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Our consultant anaesthesiologists and critical care nurses work around the clock in major operative theatres, surgical subspecialties, obstetric theatres, and high-dependency care units.',
     vision: 'To deliver safe, individualized perioperative care and world-class critical care resuscitation through advanced monitoring and evidence-based intensive protocols.',
     contactEmail: 'anaesthesia@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: surgeryTheatreImage,
+    portrait: anaPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'General & Regional Anaesthesia', description: 'State-of-the-art anaesthetic administration for complex elective and emergency surgical procedures.' },
@@ -134,8 +147,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Equipped with modern dental operatories and digital oral radiology, the dental team caters to adults and children seeking routine hygiene, cosmetic dentistry, or complex oral surgery.',
     vision: 'To champion oral health literacy and provide painless, state-of-the-art dental and maxillofacial treatments that restore function, confidence, and smiles.',
     contactEmail: 'dentistry@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: denPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Oral & Maxillofacial Surgery', description: 'Surgical management of facial trauma, jaw tumors, impacted wisdom teeth, and facial reconstructions.' },
@@ -155,8 +168,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Working in close synergy with clinical units and laboratory medicine, haematology manages patients with sickle cell anaemia, leukaemia, and ensures safe voluntary blood donations.',
     vision: 'To be a centre of clinical excellence in non-malignant and malignant haematology, with reliable blood banking services and dedicated sickle cell comprehensive management.',
     contactEmail: 'haematology@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: heamPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Comprehensive Sickle Cell Care', description: 'Specialized adult and paediatric hemoglobinopathy clinics with proactive pain crisis prevention.' },
@@ -176,8 +189,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'The department oversees electronic and hybrid medical records systems, ICD-10 medical coding, national health data reporting, and seamless patient registration across all clinics.',
     vision: 'To maintain an impregnable, digitized, patient-centric health information repository that ensures clinical continuity, absolute privacy, and robust epidemiological reporting.',
     contactEmail: 'healthrecords@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: recPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Central Patient Registration', description: 'Creation, indexing, and management of permanent electronic hospital medical record files.' },
@@ -197,8 +210,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Comprising specialized units in cardiology, nephrology, endocrinology, neurology, gastroenterology, pulmonology, and dermatology, our physicians deliver patient-centered inpatient and clinic care.',
     vision: 'To provide compassionate, evidence-based tertiary medical care and foster rigorous post-graduate residency training in all subdisciplines of internal medicine.',
     contactEmail: 'internalmedicine@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: interPortrait,
+    teamImage:itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Cardiology & Hypertension Clinic', description: 'Resting ECG, echocardiography, ambulatory blood pressure monitoring, and heart failure care.' },
@@ -218,8 +231,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Equipped with operating microscopes, phacoemulsification technology, optical coherence tomography (OCT), and refractor units, our eye care specialists treat cataracts, glaucoma, and retina disorders.',
     vision: 'To eliminate preventable blindness, advance accessible tertiary eye care, and champion community vision outreach across Delta State.',
     contactEmail: 'ophthalmology@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: opthaPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Micro-Surgical Cataract Surgery', description: 'Small-incision cataract surgery (SICS) and phacoemulsification with intraocular lens implantation.' },
@@ -239,8 +252,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'From premature newborn resuscitation to childhood infectious diseases, oncology, cardiology, and growth tracking, our paediatricians nurture the future generation with tender clinical excellence.',
     vision: 'To drastically reduce neonatal and under-five mortality, providing warm, family-centered medical and developmental care for every child.',
     contactEmail: 'paediatrics@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: pediatricCareImage,
+    portrait: paedPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Special Care Baby Unit (SCBU)', description: 'Incubator nursing, advanced phototherapy, and CPAP respiratory support for preterms and neonates.' },
@@ -260,8 +273,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Pathology analyzes tissue biopsies, bodily fluids, and microbiological specimens to furnish clinicians with accurate, rapid, and definitive diagnostic reports that guide treatments.',
     vision: 'To be an internationally accredited diagnostic laboratory known for clinical precision, quality-assured turnaround times, and biomedical training.',
     contactEmail: 'pathology@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: pathPortrait,
+    teamImage:itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Histopathology & Cytopathology', description: 'Surgical tissue biopsy analysis, FNAC, cancer grading, and diagnostic Pap smear screenings.' },
@@ -281,8 +294,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Working with neurology, orthopaedics, paediatrics, and intensive care, our licensed physiotherapists employ manual therapy, electrotherapy, and targeted exercise regimens in modern gymnasiums.',
     vision: 'To empower patients to regain optimal functional capacity and physical dignity through skilled rehabilitation and compassionate therapeutic partnerships.',
     contactEmail: 'physiotherapy@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: physioPortrait,
+    teamImage:itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Orthopaedic & Musculoskeletal Rehab', description: 'Post-fracture recovery, spinal rehabilitation, arthritis care, and joint replacement therapy.' },
@@ -302,8 +315,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'The department bridges hospital medicine with Delta State communities through health education, maternal and child wellness initiatives, school screenings, and environmental hygiene surveillance.',
     vision: 'To promote proactive disease prevention, elevate population health indicators, and ensure equity in healthcare access across urban and rural communities.',
     contactEmail: 'publichealth@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: communityHealthImage,
+    portrait: pubPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Community Health Outreach', description: 'Mobile medical camps providing free hypertension, diabetes, and eye health screenings.' },
@@ -323,8 +336,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Equipped with a 1.5 Tesla MRI suite, multi-slice CT scanners, digital fluoroscopy, high-resolution ultrasound, and digital mammography, our radiologists offer 24/7 diagnostic support.',
     vision: 'To pioneer cutting-edge diagnostic and minimally invasive interventional radiological services with precision accuracy and ultra-low radiation dose protocols.',
     contactEmail: 'radiology@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: radiologyMriImage,
+    portrait: radPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: '1.5T Magnetic Resonance Imaging (MRI)', description: 'High-definition neurological, musculoskeletal, spinal, and pelvic cross-sectional imaging.' },
@@ -344,8 +357,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Staffed by seasoned consultant surgeons, surgical residents, and scrub nurses in multiple theatre suites, the department emphasizes safety checklists, laparoscopy, and swift recovery.',
     vision: 'To be the premier surgical destination in Nigeria, recognized for innovative minimally invasive techniques, surgical safety, and excellent post-operative outcomes.',
     contactEmail: 'surgery@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: surgeryTheatreImage,
+    portrait:surgPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Minimally Invasive & Laparoscopic Surgery', description: 'Advanced keyhole surgical procedures for gallstones, appendicitis, and exploratory diagnostics.' },
@@ -365,8 +378,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Acting as the central gateway to hospital specialty clinics, family physicians evaluate undifferentiated symptoms, manage chronic illnesses, and provide preventive health counseling.',
     vision: 'To exemplify compassionate, patient-centered whole-person care that treats the patient within the context of family and community life.',
     contactEmail: 'familymedicine@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: famPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'General Outpatient Clinic (GOPD)', description: 'First-contact clinical evaluation and acute medical therapy for adults, elderly, and adolescents.' },
@@ -386,7 +399,7 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'The department also develops and manages digital services and application software that run across the FMC Asaba local area network.',
     vision: 'With a vision to evolve through current technology, the IT department is poised to grow while efficiently and cost-effectively sustaining everything digital in FMC Asaba.',
     contactEmail: 'benjaminyakubu@fmcasaba.org',
-    portrait: benjaminPortrait,
+    portrait:ictPortrait,
     teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
@@ -409,8 +422,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'The audit unit continually assesses accounting procedures, revenue streams, procurement compliance, and inventory systems to protect institutional assets and uphold transparency.',
     vision: 'To foster an institution-wide culture of fiscal integrity, operational transparency, and proactive risk mitigation aligned with federal public sector governance standards.',
     contactEmail: 'internalaudit@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: audPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Financial & Pre-Payment Auditing', description: 'Systematic vetting and compliance verification of procurement vouchers and hospital disbursements.' },
@@ -430,8 +443,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Comprising specialized nurses in critical care, perioperative, maternal and child health, oncology, and ophthalmic nursing, the directorate ensures patient safety and holistic healing.',
     vision: 'To be the benchmark for exemplary, empathetic, and evidence-based nursing care delivered with professionalism, dignity, and clinical excellence.',
     contactEmail: 'nursingservices@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: nursesTeamImage,
+    portrait: nursePortrait,
+    teamImage:itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: '24/7 Inpatient Bedside Nursing', description: 'Continuous patient monitoring, vital signs tracking, wound dressings, and therapeutic comfort.' },
@@ -451,8 +464,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Operating satellite pharmacies in inpatient wards, A&E, and outpatient clinics, licensed pharmacists collaborate with doctors to ensure safe, effective, and affordable drug therapy.',
     vision: 'To guarantee equitable access to safe, potent, and cost-effective pharmaceutical care supported by modern compounding and proactive clinical pharmacy services.',
     contactEmail: 'pharmacy@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: pharmPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: '24/7 Inpatient & Outpatient Dispensing', description: 'Timely drug dispensing, patient medication counseling, dosage validation, and interaction checks.' },
@@ -472,8 +485,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'SERVICOM monitors clinic waiting times, conducts patient satisfaction surveys, facilitates grievance redress, and fosters a culture of prompt, respectful service throughout the hospital.',
     vision: 'To make FMC Asaba the most responsive, patient-friendly, and accountable healthcare institution in Nigeria where every citizen receives prompt and courteous service.',
     contactEmail: 'servicom@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: seviPortrait ,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Customer Care & Hospital Helpdesks', description: 'Frontline guidance, patient wayfinding assistance, and compassionate enquiry resolution.' },
@@ -493,8 +506,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Medical social workers liaise between clinical teams, families, philanthropic organizations, and state welfare boards to ensure socio-economic hurdles never obstruct vital medical care.',
     vision: 'To ensure that no patient is denied healthcare due to social vulnerability, advocating for dignity, equity, and holistic psychological support.',
     contactEmail: 'socialwelfare@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: socialPortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Psychosocial Counseling & Assessment', description: 'Emotional and psychological counseling for patients coping with chronic illnesses and trauma.' },
@@ -514,8 +527,8 @@ export const DEPARTMENT_CONTENT: Record<string, DepartmentContent> = {
     introduction: 'Leveraging digital stock tracking tools in coordination with IT and procurement, the department ensures unbroken supply chains for surgical theatres, clinics, and administrative units.',
     vision: 'To maintain an efficient, transparent, and resilient hospital supply chain with zero stock-outs of vital medical consumables and accountable asset tracking.',
     contactEmail: 'stores@fmcasaba.org',
-    portrait: benjaminPortrait,
-    teamImage: hospitalComplexImage,
+    portrait: storePortrait,
+    teamImage: itTeamPhoto,
     backgroundVideo: scannerVideoUrl,
     services: [
       { title: 'Medical Consumables Warehousing', description: 'Secure, climate-controlled warehousing of surgical dressings, syringes, and clinical consumables.' },

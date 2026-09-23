@@ -1,8 +1,8 @@
-const mdPhoto = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789594945/fmc_management_md_ypx4gg.jpg';
-const cmacPhoto = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789594943/fmc_management_cmac_shxjjw.jpg';
-const adminPhoto = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789594943/fmc_management_admin_r5s9dd.jpg';
-const dcmacPhoto = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789594943/fmc_management_dcmac_mgmu1e.jpg';
-const financePhoto = 'https://res.cloudinary.com/dk59pn2dq/image/upload/v1789594945/fmc_management_finance_ekhr7y.jpg';
+import mdPhoto from '../assets/images/fmc_management_md.jpg';
+import cmacPhoto from '../assets/images/fmc_management_cmac.jpg';
+import adminPhoto from '../assets/images/fmc_management_admin.jpg';
+import dcmacPhoto from '../assets/images/fmc_management_dcmac.jpg';
+import financePhoto from '../assets/images/fmc_management_finance.jpg';
 
 export interface ManagementMember {
   id: string;

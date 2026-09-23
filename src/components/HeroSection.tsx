@@ -161,15 +161,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Quick Accreditation Indicators */}
-            <div className="mt-6 pt-4 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500 font-medium">
+            <div className="mt-6 pt-4 border-t border-slate-200/80 flex items-center justify-around text-xs text-slate-500 font-medium">
               <span className="flex items-center gap-1.5">
                 <Award className="w-3.5 h-3.5 text-emerald-600" /> NHIS Accredited
               </span>
               <span className="flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5 text-emerald-600" /> 24/7 Emergency Wing
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-emerald-600" /> South-South Referral Hub
               </span>
             </div>
           </div>

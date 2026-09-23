@@ -3,17 +3,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// import { Link } from './Link';
-// import { DEPARTMENTS } from '../data/departments';
 import React from 'react';
 import { ViewMode, NewsArticle } from './types';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { CompleteNewsPage } from './components/CompleteNewsPage';
-import { NewsArticleModal } from './components/NewsArticleModal';
-import { ReachUsModal } from './components/ReachUsModal';
-import { SearchModal } from './components/SearchModal';
-import { ProposalBar } from './components/ProposalBar';
 import { AboutSection } from './components/AboutSection';
 import { ManagementSection } from './components/ManagementSection';
 import { DepartmentsPage } from './components/DepartmentsSection';
@@ -270,31 +264,6 @@ export default function App() {
 
         </>
       )}
-
-      {/* Interactive Modals */}
-      <NewsArticleModal
-        article={selectedArticle}
-        onClose={() => setSelectedArticle(null)}
-      />
-
-      <ReachUsModal
-        isOpen={isReachUsOpen}
-        onClose={() => setIsReachUsOpen(false)}
-      />
-
-      <SearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        onSelectArticle={(article) => setSelectedArticle(article)}
-      />
-
-      {/* Proposal Feature Highlights & Switcher */}
-      <ProposalBar
-        currentView={currentView}
-        onToggleView={() =>
-          setCurrentView(currentView === 'hero' ? 'news-page' : 'hero')
-        }
-      />
 
     </div>
   );

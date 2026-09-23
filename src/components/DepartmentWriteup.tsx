@@ -130,7 +130,7 @@ export function DepartmentWriteup({ department, content, onBackToDepartmentsList
                   {department.head}
                 </h3>
                 <p id="hod-title" className="text-neutral-300 text-base sm:text-lg mt-1 font-normal">
-                  Head of Department
+                  {department.title || 'Head of Department'}
                 </p>
                 <div className="mt-4 pt-4 border-t border-white/10 flex flex-col gap-2">
                   <span className="text-xs text-neutral-400">

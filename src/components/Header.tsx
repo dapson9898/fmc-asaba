@@ -1,5 +1,5 @@
 import React from 'react';
-import fmcLogoOfficial from '../assets/images/fmc_asaba_official_logo_1789552607691.jpg';
+import fmcLogoOfficial from '../assets/images/fmc-logo.png';
 import {
   PhoneCall,
   ShieldCheck,
@@ -613,16 +613,6 @@ export const Header: React.FC<HeaderProps> = ({
             <p className="text-[11px] sm:text-xs text-emerald-100/70">
               Immediate response for accident, emergency &amp; ambulance dispatches.
             </p>
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                onOpenEmergency();
-              }}
-              className="mt-1 w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-            >
-              <span>Reach Us Online</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
           </div>
 
           {/* Campus Location */}
@@ -700,7 +690,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="p-6 space-y-3">
               {[
                 {
-                  title: 'Program officers.',
+                  title: 'Protocol officers.',
                   desc: 'Upload gallery and news contents.',
                   badge: 'Admin',
                   color: 'emerald',
@@ -715,6 +705,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div
                   key={idx}
                   onClick={() => {
+                    // Direct to portal URL
                     alert(`Navigating to ${portal.title} login endpoint...`);
                     setIsPortalModalOpen(false);
                   }}

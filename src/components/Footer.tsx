@@ -1,5 +1,6 @@
 import React from 'react';
-import fmcLogoOfficial from '../assets/images/fmc_asaba_official_logo_1789552607691.jpg';
+import fmcLogoOfficial from '../assets/images/fmc-logo.png';
+import { Instagram, Twitter, Facebook } from 'lucide-react';
 
 interface FooterProps {
   onNavigateHome?: () => void;
@@ -156,7 +157,7 @@ export const Footer: React.FC<FooterProps> = ({
                 aria-label="FMC Asaba Facebook"
                 className="w-9 h-9 rounded-full bg-emerald-600/20 hover:bg-emerald-600 text-emerald-800 hover:text-white flex items-center justify-center transition-colors shadow-2xs font-bold text-sm"
               >
-                f
+                <Facebook />
               </a>
               {/* Twitter/X */}
               <a
@@ -166,7 +167,7 @@ export const Footer: React.FC<FooterProps> = ({
                 aria-label="FMC Asaba Twitter"
                 className="w-9 h-9 rounded-full bg-emerald-600/20 hover:bg-emerald-600 text-emerald-800 hover:text-white flex items-center justify-center transition-colors shadow-2xs font-bold text-xs"
               >
-                𝕏
+                <Twitter />
               </a>
               {/* Instagram */}
               <a
@@ -176,7 +177,7 @@ export const Footer: React.FC<FooterProps> = ({
                 aria-label="FMC Asaba Instagram"
                 className="w-9 h-9 rounded-full bg-emerald-600/20 hover:bg-emerald-600 text-emerald-800 hover:text-white flex items-center justify-center transition-colors shadow-2xs font-bold text-xs"
               >
-                ig
+                <Instagram />
               </a>
             </div>
 
