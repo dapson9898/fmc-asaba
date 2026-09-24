@@ -26,7 +26,7 @@ import {
 import { Link } from './Link';
 import { DEPARTMENTS, Department } from '../data/departments';
 
-// Helper to assign specialized iconography to each department
+// Helper to assign specialized icon to each department
 function getDepartmentIcon(id: string) {
   switch (id) {
     case 'accident-emergency':
@@ -127,7 +127,7 @@ export function DepartmentsPage() {
       className="relative z-10 w-full py-16 sm:py-24 bg-slate-50 border-t border-slate-200/80 scroll-mt-20"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header matching the reference styling & copy */}
+        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/70 border border-emerald-300/60 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-4 shadow-2xs">
             <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
@@ -178,7 +178,7 @@ export function DepartmentsPage() {
           </div>
         </div>
 
-        {/* 2-Column Department Pill Grid faithfully reproducing the reference layout */}
+        {/* 2-Column Department Grid */}
         <div
           id="departments-2col-grid"
           className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4"

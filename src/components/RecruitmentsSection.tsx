@@ -18,7 +18,7 @@ export const RecruitmentsSection: React.FC<RecruitmentsSectionProps> = ({ onGoTo
           Federal Career Notices &amp; Vacancies
         </div>
 
-        {/* Section Heading matching reference */}
+        {/* Section Heading */}
         <h2
           id="recruitments-heading"
           className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight font-heading"
@@ -26,7 +26,7 @@ export const RecruitmentsSection: React.FC<RecruitmentsSectionProps> = ({ onGoTo
           Recruitments
         </h2>
 
-        {/* Narrative matching the reference screenshot */}
+        {/* Narrative */}
         <div className="mt-5 space-y-4 text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
           <p>
             As a Federal establishment, recruitments in FMC Asaba are always advertised in National dailies prior to commencement of the exercise.

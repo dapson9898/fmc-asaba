@@ -23,4 +23,6 @@ export interface NewsArticle {
   featuredInHero?: boolean;
 }
 
-export type ViewMode = 'hero' | 'news-page';
+export type PortalRole = 'protocol' | 'it-admin';
+
+export type ViewMode = 'hero' | 'news-page' | 'sign-in';

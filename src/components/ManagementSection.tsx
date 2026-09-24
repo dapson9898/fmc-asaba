@@ -44,7 +44,7 @@ export const ManagementSection: React.FC<ManagementSectionProps> = ({ onContactS
       className="relative z-10 w-full py-16 sm:py-24 bg-linear-to-b from-slate-50 via-white to-slate-50 border-t border-slate-200/80 scroll-mt-20"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header with exact subtitle from the FMC Asaba reference */}
+        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/70 border border-emerald-300/60 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-4 shadow-2xs">
             <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
@@ -63,7 +63,7 @@ export const ManagementSection: React.FC<ManagementSectionProps> = ({ onContactS
           </p>
         </div>
 
-        {/* 5-Column Responsive Cards Grid matching the 5 executives in the reference */}
+        {/* 5-Column Responsive Cards Grid for the management */}
         <div
           id="management-cards-grid"
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-6 lg:gap-5"
@@ -98,7 +98,6 @@ export const ManagementSection: React.FC<ManagementSectionProps> = ({ onContactS
                       }`}
                     >
                       {isMd ? <Award className="w-3 h-3 text-amber-300" /> : <ShieldCheck className="w-3 h-3" />}
-                      {/* <span>{isMd ? 'Chief Executive' : member.category}</span> */}
                     </span>
                   </div>
 

@@ -4,8 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import {defineConfig, Plugin} from 'vite';
 
-// LINT.IfChange(aistudio_media_plugin)
-function aistudioMediaPlugin(): Plugin {
+function mediaPlugin(): Plugin {
   return {
     name: 'vite-plugin-aistudio-media',
     configureServer(server) {
@@ -15,7 +14,7 @@ function aistudioMediaPlugin(): Plugin {
           try {
             const decodedPath = decodeURIComponent(rawPath);
             const relativePath = decodedPath.replace(/^\//, '');
-            const aistudioDir = path.resolve(
+            const studioDir = path.resolve(
               __dirname,
               'public',
               'assets',
@@ -23,7 +22,7 @@ function aistudioMediaPlugin(): Plugin {
             );
             const filePath = path.resolve(__dirname, 'public', relativePath);
             if (
-              filePath.startsWith(aistudioDir + path.sep) &&
+              filePath.startsWith(studioDir + path.sep) &&
               fs.existsSync(filePath) &&
               fs.statSync(filePath).isFile()
             ) {
@@ -66,7 +65,7 @@ function aistudioMediaPlugin(): Plugin {
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss(), aistudioMediaPlugin()],
+    plugins: [react(), tailwindcss(), mediaPlugin()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
@@ -75,10 +74,7 @@ export default defineConfig(() => {
     server: {
       host: '0.0.0.0',
       port: 3000,
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
-      // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
   };

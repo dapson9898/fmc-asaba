@@ -10,7 +10,7 @@ interface AboutSectionProps {
 export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreDepartments }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Lock background scrolling and add ESC key listener when modal is open
+  // To help lock background scrolling and add ESC key listener when modal is open
   React.useEffect(() => {
     if (isModalOpen) {
       const originalOverflow = document.body.style.overflow;
@@ -64,7 +64,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreDepartments
               Federal Medical Centre, Asaba was established in August, 1998 as a result of the policy of the Federal Government to provide a Federal Medical Centre in any state of the country where there is no Federal Teaching Hospital. Remarkably, the new Federal Medical Centre, Asaba took off with a mere change of name and ownership from the old Central Hospital, Asaba.
             </p>
 
-            {/* 3 Pillars Grid: Vision, Mission, Core Values */}
+            {/* Vision, Mission, Core Values */}
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Vision Card */}
               <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-emerald-400 hover:shadow-md transition-all duration-200 flex flex-col">
@@ -112,7 +112,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreDepartments
               </div>
             </div>
 
-            {/* Learn More Button matching the green button in reference */}
+            {/* Learn More Button  */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <button
                 id="about-learn-more-btn"
@@ -126,14 +126,14 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onExploreDepartments
             </div>
           </div>
 
-          {/* Right Column: Circular Hospital Staff Visual matching reference */}
+          {/* Right Column: Circular Hospital Staff Visual */}
           <div className="lg:col-span-5 flex justify-center items-center">
             <div className="relative w-72 h-72 sm:w-96 sm:h-96 lg:w-[420px] lg:h-[420px]">
               {/* Outer Decorative Glow & Accent Rings */}
               <div className="absolute inset-0 rounded-full bg-emerald-100/60 scale-105 filter blur-xs animate-pulse" />
               <div className="absolute inset-0 rounded-full border-4 border-emerald-400/40" />
 
-              {/* Circular Clipped Photo */}
+              {/* Circular Photo */}
               <div className="relative w-full h-full rounded-full overflow-hidden border-8 border-white shadow-2xl bg-slate-900">
                 <img
                   src={aboutImage}

@@ -311,7 +311,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
             </div>
 
-            {/* Angled Vertical Carousel (Matches User Request: scrolling stylishly at an angle vertically) */}
+            {/* Angled Vertical Carousel (scrolling stylishly at an angle vertically) */}
             <div className="md:col-span-5 xl:col-span-5 flex justify-center md:justify-end">
               <AngledVerticalCarousel
                 articles={heroArticles}
@@ -326,7 +326,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Bottom Bar: Quick Category Toggles & Additional Information CTA */}
           <div className="relative z-10 pt-4 border-t border-white/15 flex flex-wrap items-center justify-between gap-4 text-xs">
             <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-              <span className="text-white/60 uppercase tracking-wider text-[10px] font-bold">In Carousel:</span>
+              <span className="text-white/60 uppercase tracking-wider text-[10px] font-bold">Categories:</span>
               {heroArticles.map((article, i) => (
                 <button
                   key={article.id}
@@ -342,7 +342,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               ))}
             </div>
 
-            {/* Second prompt-requested link for more detailed articles and additional information */}
+            {/* Link for more detailed articles and additional information */}
             <button
               onClick={onGoToCompleteNews}
               className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-300 hover:text-white transition-colors"

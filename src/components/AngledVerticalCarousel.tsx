@@ -71,9 +71,9 @@ export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
         </div>
       </div>
 
-      {/* Tilted / Angled Container */}
+      {/* Tilted Container */}
       <div className="relative w-full max-w-[280px] xl:max-w-[330px] overflow-hidden py-2 xl:py-3">
-        {/* Subtle Angle Skew Transform */}
+        {/* Angle Skew Transform */}
         <div
           ref={scrollContainerRef}
           className="space-y-1 transition-transform duration-500 ease-out transform -rotate-2 hover:rotate-0 origin-center"

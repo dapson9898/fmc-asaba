@@ -60,7 +60,7 @@ export function DepartmentWriteup({ department, content, onBackToDepartmentsList
           </p>
         </div>
 
-        {/* Two-Column Layout matching the image */}
+        {/* Two-Column Layout */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Navigation Button & HOD Profile Card */}
           <div id="leadership" className="md:col-span-5 lg:col-span-4 flex flex-col gap-6">
@@ -100,7 +100,7 @@ export function DepartmentWriteup({ department, content, onBackToDepartmentsList
               <span>Back to Departments List</span>
             </button>
 
-            {/* Profile Card for Benjamin Yakubu */}
+            {/* Profile Card for HOD */}
             <div
               id="hod-profile-card"
               className="bg-neutral-900/90 border border-white/10 rounded-2xl overflow-hidden shadow-xl"
@@ -158,7 +158,7 @@ export function DepartmentWriteup({ department, content, onBackToDepartmentsList
                   </button>
                   {copied && (
                     <span className="text-[11px] text-emerald-300 animate-fade-in">
-                      Copied HOD email to clipboard!
+                      Copied HOD's email to clipboard!
                     </span>
                   )}
                 </div>

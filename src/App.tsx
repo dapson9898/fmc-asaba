@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { ViewMode, NewsArticle } from './types';
+import { PortalRole, ViewMode, NewsArticle } from './types';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { CompleteNewsPage } from './components/CompleteNewsPage';
@@ -18,6 +18,7 @@ import { BackgroundVideo } from './components/BackgroundVideo';
 import { DepartmentWriteup } from './components/DepartmentWriteup';
 import Gallery from './components/Gallery';
 import { DEPARTMENTS, getDepartmentContent } from './data/departments';
+import SignIn from './components/signin';
 
 
 function getDepartmentFromPath() {
@@ -27,7 +28,12 @@ function getDepartmentFromPath() {
 
 
 export default function App() {
-  const [currentView, setCurrentView] = React.useState<ViewMode>('hero');
+  const [currentView, setCurrentView] = React.useState<ViewMode>(() => (
+    window.location.pathname === '/signin' ? 'sign-in' : 'hero'
+  ));
+  const [portalRole, setPortalRole] = React.useState<PortalRole>(() => (
+    new URLSearchParams(window.location.search).get('role') === 'it-admin' ? 'it-admin' : 'protocol'
+  ));
   const [selectedArticle, setSelectedArticle] = React.useState<NewsArticle | null>(null);
   const [isReachUsOpen, setIsReachUsOpen] = React.useState(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
@@ -38,6 +44,11 @@ export default function App() {
     window.history.pushState({}, '', url);
     window.dispatchEvent(new PopStateEvent('popstate'));
     setCurrentPath(window.location.pathname);
+  };
+
+  const openSignIn = (role: PortalRole) => {
+    setPortalRole(role);
+    navigate(`/signin?role=${role}`, 'sign-in');
   };
 
   const handleBackToDepartments = () => {
@@ -81,6 +92,12 @@ export default function App() {
 
     const handlePopState = () => {
       setCurrentPath(window.location.pathname);
+      if (window.location.pathname === '/signin') {
+        setPortalRole(new URLSearchParams(window.location.search).get('role') === 'it-admin' ? 'it-admin' : 'protocol');
+        setCurrentView('sign-in');
+      } else if (currentView === 'sign-in') {
+        setCurrentView('hero');
+      }
       checkHashAndScroll();
     };
 
@@ -103,10 +120,18 @@ export default function App() {
         onViewChange={(view) => setCurrentView(view)}
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenEmergency={() => setIsReachUsOpen(true)}
+        onOpenSignIn={openSignIn}
         currentPath={currentPath}
       />
 
-      {department && content ? (
+      {currentView === 'sign-in' ? (
+        <main className="flex h-dvh min-h-0 flex-col pt-20">
+          <SignIn
+            role={portalRole}
+            onBack={() => navigate('/')}
+          />
+        </main>
+      ) : department && content ? (
         <main id="mainframe-app" className="w-full bg-black text-white selection:bg-emerald-500 selection:text-black">
           <section className="relative min-h-screen w-full overflow-hidden">
             <BackgroundVideo source={content.backgroundVideo} />

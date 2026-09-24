@@ -16,13 +16,14 @@ import {
   Clock,
   ExternalLink
 } from 'lucide-react';
-import { ViewMode } from '../types';
+import { PortalRole, ViewMode } from '../types';
 
 interface HeaderProps {
   currentView: ViewMode;
   onViewChange: (view: ViewMode) => void;
   onOpenSearch?: () => void;
   onOpenEmergency: () => void;
+  onOpenSignIn: (role: PortalRole) => void;
   currentPath?: string;
 }
 
@@ -30,6 +31,7 @@ export const Header: React.FC<HeaderProps> = ({
   currentView,
   onViewChange,
   onOpenEmergency,
+  onOpenSignIn,
   currentPath: propCurrentPath,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -309,12 +311,12 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header
+            <header
         id="fmc-header"
         className={`fixed inset-x-0 top-0 z-50 w-full transition-all duration-500 ease-in-out ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-xs border-b border-emerald-900/10 py-0'
-            : 'bg-transparent border-b border-transparent shadow-none py-1 sm:py-2'
+            ? 'bg-white/95 backdrop-blur-md border-b-4 border-slate-400 shadow-[0_3px_12px_rgba(15,23,42,0.90)] py-0'
+            : 'bg-transparent border-b-2 border-transparent shadow-none py-1 sm:py-2'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -601,7 +603,7 @@ export const Header: React.FC<HeaderProps> = ({
             </p>
           </div>
 
-          {/* Quick Call Emergency Card (Hidden on mobile view to provide ample room for the bottom section without scrolling) */}
+          {/* Quick Call Emergency Card (Hidden on mobile view) */}
           <div className="hidden sm:block p-3.5 sm:p-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 space-y-2">
             <div className="flex items-center gap-2 text-emerald-300 text-xs font-bold uppercase tracking-wider">
               <PhoneCall className="w-3.5 h-3.5 animate-pulse" />
@@ -705,9 +707,8 @@ export const Header: React.FC<HeaderProps> = ({
                 <div
                   key={idx}
                   onClick={() => {
-                    // Direct to portal URL
-                    alert(`Navigating to ${portal.title} login endpoint...`);
                     setIsPortalModalOpen(false);
+                    onOpenSignIn(portal.badge === 'Admin' ? 'protocol' : 'it-admin');
                   }}
                   className="p-4 rounded-2xl border border-slate-200 hover:border-emerald-600 hover:bg-emerald-50/40 transition-all cursor-pointer group flex items-center justify-between gap-4"
                 >

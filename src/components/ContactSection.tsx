@@ -88,7 +88,7 @@ export const GetInTouchSection: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Form: Matching the fields & Captcha in the reference */}
+          {/* Left Form */}
           <div className="lg:col-span-8 bg-slate-50/70 rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/90 shadow-xs">
             {isSubmitted ? (
               <div className="text-center py-10 sm:py-16 space-y-4">
@@ -178,7 +178,7 @@ export const GetInTouchSection: React.FC = () => {
                   />
                 </div>
 
-                {/* Captcha & Submit Row matching reference */}
+                {/* Captcha & Submit Row */}
                 <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
                   {/* Captcha Challenge Box */}
                   <div className="flex items-center gap-2">
@@ -210,7 +210,7 @@ export const GetInTouchSection: React.FC = () => {
                     />
                   </div>
 
-                  {/* Send Message Button matching reference green styling */}
+                  {/* Send Message Button */}
                   <button
                     type="submit"
                     disabled={isSubmitting}
@@ -231,7 +231,7 @@ export const GetInTouchSection: React.FC = () => {
             )}
           </div>
 
-          {/* Right Contact Info Cards matching reference */}
+          {/* Right Contact Info Cards */}
           <div className="lg:col-span-4 space-y-4">
             {/* Card 1: Physical Address */}
             <div className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-emerald-400 transition-colors flex items-start gap-4">
