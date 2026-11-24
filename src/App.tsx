@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { PortalRole, ViewMode, NewsArticle } from './types';
+import { fetchNewsArticles } from './data/newsApi';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { CompleteNewsPage } from './components/CompleteNewsPage';
@@ -16,6 +17,7 @@ import { GetInTouchSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { BackgroundVideo } from './components/BackgroundVideo';
 import { DepartmentWriteup } from './components/DepartmentWriteup';
+import { NewsArticleModal } from './components/NewsArticleModal';
 import Gallery from './components/Gallery';
 import { DEPARTMENTS, getDepartmentContent } from './data/departments';
 import SignIn from './components/signin';
@@ -35,9 +37,27 @@ export default function App() {
     new URLSearchParams(window.location.search).get('role') === 'it-admin' ? 'it-admin' : 'protocol'
   ));
   const [selectedArticle, setSelectedArticle] = React.useState<NewsArticle | null>(null);
+  const [newsArticles, setNewsArticles] = React.useState<NewsArticle[]>([]);
+  const [newsLoading, setNewsLoading] = React.useState(true);
+  const [newsError, setNewsError] = React.useState<string | null>(null);
   const [isReachUsOpen, setIsReachUsOpen] = React.useState(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
   const [currentPath, setCurrentPath] = React.useState(window.location.pathname);
+
+  React.useEffect(() => {
+    const controller = new AbortController();
+    fetchNewsArticles(controller.signal)
+      .then(setNewsArticles)
+      .catch((error: unknown) => {
+        if (controller.signal.aborted) return;
+        setNewsError(error instanceof Error ? error.message : 'Unable to load news.');
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setNewsLoading(false);
+      });
+
+    return () => controller.abort();
+  }, []);
 
   const navigate = (url: string, view: ViewMode = 'hero') => {
     setCurrentView(view);
@@ -197,6 +217,9 @@ export default function App() {
             {currentView === 'hero' && (
               <>
                 <HeroSection
+                  articles={newsArticles}
+                  isLoading={newsLoading}
+                  error={newsError}
                   onOpenReachUs={() => setIsReachUsOpen(true)}
                   onScrollToContact={() => {
                     document.getElementById('contact-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -236,6 +259,9 @@ export default function App() {
 
             {currentView === 'news-page' && (
               <CompleteNewsPage
+                articles={newsArticles}
+                isLoading={newsLoading}
+                error={newsError}
                 onBackToHero={() => {
                   setCurrentView('hero');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -290,6 +316,10 @@ export default function App() {
         </>
       )}
 
+      <NewsArticleModal
+        article={selectedArticle}
+        onClose={() => setSelectedArticle(null)}
+      />
     </div>
   );
 }

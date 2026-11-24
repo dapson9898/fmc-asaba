@@ -9,14 +9,25 @@ import {
   BookOpen,
   HeartPulse,
   Award,
-  Clock
+  Clock,
 } from 'lucide-react';
-import { getHeroNewsArticles } from '../data/newsData';
-import { NewsArticle, ViewMode } from '../types';
+import { formatNewsDate, getNewsImage } from '../data/newsApi';
+import { NewsArticle } from '../types';
 import { MDWelcomeCard } from './MDWelcomeCard';
 import { AngledVerticalCarousel } from './AngledVerticalCarousel';
 
+const HERO_COLORS = [
+  { from: '#064e3b', via: '#047857', to: '#022c22', accent: '#10b981', glow: 'rgba(16, 185, 129, 0.28)' },
+  { from: '#164e63', via: '#0e7490', to: '#083344', accent: '#06b6d4', glow: 'rgba(6, 182, 212, 0.25)' },
+  { from: '#4c1d3d', via: '#9d174d', to: '#2a1024', accent: '#f43f5e', glow: 'rgba(244, 63, 94, 0.25)' },
+  { from: '#1e3a8a', via: '#1d4ed8', to: '#172554', accent: '#3b82f6', glow: 'rgba(59, 130, 246, 0.25)' },
+  { from: '#78350f', via: '#b45309', to: '#451a03', accent: '#f59e0b', glow: 'rgba(245, 158, 11, 0.25)' },
+];
+
 interface HeroSectionProps {
+  articles: NewsArticle[];
+  isLoading: boolean;
+  error: string | null;
   onOpenReachUs: () => void;
   onScrollToContact: () => void;
   onGoToCompleteNews: () => void;
@@ -24,19 +35,20 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
+  articles,
+  isLoading,
+  error,
   onOpenReachUs,
   onScrollToContact,
   onGoToCompleteNews,
   onOpenArticle,
 }) => {
-  // Only news articles explicitly approved for the hero carousel (featuredInHero: true)
-  const heroArticles = React.useMemo(() => {
-    return getHeroNewsArticles();
-  }, []);
+  const heroArticles = articles.slice(0, 10);
 
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = React.useState(true);
-  const activeArticle = heroArticles[activeIndex] || heroArticles[0];
+  const activeArticle = heroArticles[activeIndex];
+  const activeColor = HERO_COLORS[activeIndex % HERO_COLORS.length];
 
   const [isDesktop, setIsDesktop] = React.useState<boolean>(() => {
     return typeof window !== 'undefined' ? window.innerWidth >= 1024 : true;
@@ -55,16 +67,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     if (!isAutoPlaying || heroArticles.length <= 1) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % heroArticles.length);
-    }, 6500);
+    }, 5000);
 
     return () => clearInterval(timer);
   }, [isAutoPlaying, heroArticles.length]);
 
   const handleNextArticle = () => {
+    if (heroArticles.length === 0) return;
     setActiveIndex((prev) => (prev + 1) % heroArticles.length);
   };
 
   const handlePrevArticle = () => {
+    if (heroArticles.length === 0) return;
     setActiveIndex((prev) => (prev - 1 + heroArticles.length) % heroArticles.length);
   };
 
@@ -81,8 +95,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         id="hero-dynamic-gradient-backdrop"
         className="absolute inset-0 pointer-events-none transition-all duration-1000 ease-out z-0"
         style={{
-          background: `radial-gradient(ellipse at 85% 30%, ${activeArticle.gradient.glow} 0%, rgba(248, 250, 252, 0) 65%),
-                       radial-gradient(circle at 70% 80%, ${activeArticle.gradient.accent}15 0%, transparent 50%)`
+          background: `radial-gradient(ellipse at 85% 30%, ${activeColor.glow} 0%, rgba(248, 250, 252, 0) 65%),
+                       radial-gradient(circle at 70% 80%, ${activeColor.accent}15 0%, transparent 50%)`
         }}
       />
 
@@ -99,18 +113,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           className="w-full lg:w-[44%] xl:w-[42%] lg:shrink-0 relative z-10 flex flex-col justify-center px-6 sm:px-10 lg:pl-8 lg:pr-6 xl:pl-12 xl:pr-8 py-8 lg:py-6 transition-all duration-1000 ease-in-out"
           style={{
             background: isDesktop
-              ? `linear-gradient(to right, #f8fafc 0%, #f8fafc 25%, ${activeArticle.gradient.from}15 55%, ${activeArticle.gradient.from}45 80%, ${activeArticle.gradient.from} 100%)`
-              : `linear-gradient(to bottom, #f8fafc 0%, #f8fafc 35%, ${activeArticle.gradient.from}20 70%, ${activeArticle.gradient.from} 100%)`,
+              ? `linear-gradient(to right, #f8fafc 0%, #f8fafc 25%, ${activeColor.from}15 55%, ${activeColor.from}45 80%, ${activeColor.from} 100%)`
+              : `linear-gradient(to bottom, #f8fafc 0%, #f8fafc 35%, ${activeColor.from}20 70%, ${activeColor.from} 100%)`,
           }}
         >
           {/* Subtle Organic Atmospheric Glow Shapes in Left Background matching active article */}
           <div
             className="absolute top-0 left-0 w-80 h-80 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-1000"
-            style={{ backgroundColor: activeArticle.gradient.glow }}
+            style={{ backgroundColor: activeColor.glow }}
           />
           <div
             className="absolute bottom-10 left-10 w-64 h-64 rounded-full blur-2xl pointer-events-none transition-all duration-1000 opacity-60"
-            style={{ backgroundColor: `${activeArticle.gradient.accent}20` }}
+            style={{ backgroundColor: `${activeColor.accent}20` }}
           />
 
           <div className="relative z-10 max-w-xl">
@@ -180,31 +194,33 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           id="hero-right-side"
           className="w-full lg:w-[56%] xl:w-[58%] lg:flex-1 relative z-10 flex flex-col justify-between p-6 sm:p-8 lg:p-6 xl:p-8 2xl:p-10 min-h-[550px] lg:min-h-0 overflow-hidden text-white transition-all duration-1000 ease-in-out"
           style={{
-            background: `linear-gradient(135deg, ${activeArticle.gradient.from} 0%, ${activeArticle.gradient.via} 50%, ${activeArticle.gradient.to} 100%)`,
+            background: `linear-gradient(135deg, ${activeColor.from} 0%, ${activeColor.via} 50%, ${activeColor.to} 100%)`,
           }}
           onMouseEnter={() => setIsAutoPlaying(false)}
           onMouseLeave={() => setIsAutoPlaying(true)}
         >
           {/* Dynamic Background Image of Current News Story with Overlay */}
           <div className="absolute inset-0 z-0 overflow-hidden">
-            <img
-              key={activeArticle.id}
-              src={activeArticle.image}
-              alt={activeArticle.title}
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover object-center scale-105 animate-[fadeIn_0.8s_ease-out] transition-all duration-1000 filter brightness-45 contrast-110 saturate-120"
-            />
+            {activeArticle && (
+              <img
+                key={activeArticle.id}
+                src={getNewsImage(activeArticle)}
+                alt=""
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-center scale-105 animate-[fadeIn_0.8s_ease-out] transition-all duration-1000 filter brightness-45 contrast-110 saturate-120"
+              />
+            )}
             {/* Gradient Mask for maximum text readability and atmospheric blend */}
             <div
               className="absolute inset-0 transition-opacity duration-1000"
               style={{
-                background: `linear-gradient(90deg, ${activeArticle.gradient.from}f0 0%, ${activeArticle.gradient.from}b0 45%, ${activeArticle.gradient.to}cc 100%)`,
+                background: `linear-gradient(90deg, ${activeColor.from}f0 0%, ${activeColor.from}b0 45%, ${activeColor.to}cc 100%)`,
               }}
             />
             {/* Subtle animated light bloom */}
             <div
               className="absolute -top-32 -right-32 w-96 h-96 rounded-full blur-3xl opacity-30 transition-all duration-1000"
-              style={{ backgroundColor: activeArticle.gradient.accent }}
+              style={{ backgroundColor: activeColor.accent }}
             />
           </div>
 
@@ -245,44 +261,39 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="flex items-center gap-3">
                 <span
                   className="px-3 py-1 rounded-md text-xs font-bold text-white shadow-sm"
-                  style={{ backgroundColor: activeArticle.gradient.accent }}
+                  style={{ backgroundColor: activeColor.accent }}
                 >
-                  {activeArticle.category}
+                  Latest News
                 </span>
 
-                <span className="text-xs text-white/80 flex items-center gap-1 font-medium">
+                {activeArticle && <span className="text-xs text-white/80 flex items-center gap-1 font-medium">
                   <Calendar className="w-3.5 h-3.5 text-white/70" />
-                  {activeArticle.date}
-                </span>
-
-                <span className="text-xs text-white/60">•</span>
-
-                <span className="text-xs text-white/80 font-medium">
-                  {activeArticle.readTime}
-                </span>
+                  {formatNewsDate(activeArticle.created_at)}
+                </span>}
               </div>
 
               {/* Main Headline (Bold, Impactful, Animated on Change) */}
               <h2
-                key={`title-${activeArticle.id}`}
+                key={`title-${activeArticle?.id ?? 'empty'}`}
                 className="text-2xl sm:text-3xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-extrabold text-white font-heading leading-tight tracking-tight drop-shadow-md animate-[fadeIn_0.5s_ease-out]"
               >
-                {activeArticle.title}
+                {activeArticle?.title ?? (isLoading ? 'Loading the latest news…' : 'News updates')}
               </h2>
 
               {/* Excerpt */}
               <p
-                key={`excerpt-${activeArticle.id}`}
+                key={`summary-${activeArticle?.id ?? 'empty'}`}
                 className="text-xs sm:text-sm text-white/85 line-clamp-3 lg:line-clamp-2 xl:line-clamp-3 leading-relaxed font-normal max-w-lg animate-[fadeIn_0.6s_ease-out]"
               >
-                {activeArticle.excerpt}
+                {activeArticle?.summary ?? error ?? 'There are no published news articles available right now.'}
               </p>
 
               {/* Interactive Story Actions */}
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 <button
                   id="read-full-story-btn"
-                  onClick={() => onOpenArticle(activeArticle)}
+                  onClick={() => activeArticle && onOpenArticle(activeArticle)}
+                  disabled={!activeArticle}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-slate-950 font-bold text-xs sm:text-sm hover:bg-emerald-400 hover:text-slate-950 shadow-lg hover:shadow-xl transition-all duration-200"
                 >
                   <span>Read Full Article</span>
@@ -305,7 +316,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <ChevronRight className="w-4 h-4" />
                   </button>
                   <span className="text-xs font-semibold text-white/70 ml-2">
-                    0{activeIndex + 1} / 0{heroArticles.length}
+                    {String(activeIndex + 1).padStart(2, '0')} / {String(heroArticles.length).padStart(2, '0')}
                   </span>
                 </div>
               </div>
@@ -313,42 +324,48 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Angled Vertical Carousel (scrolling stylishly at an angle vertically) */}
             <div className="md:col-span-5 xl:col-span-5 flex justify-center md:justify-end">
-              <AngledVerticalCarousel
-                articles={heroArticles}
-                activeIndex={activeIndex}
-                onSelectArticle={(idx) => setActiveIndex(idx)}
-                isAutoPlaying={isAutoPlaying}
-                onToggleAutoPlay={() => setIsAutoPlaying(!isAutoPlaying)}
-              />
+              {heroArticles.length > 0 && (
+                <AngledVerticalCarousel
+                  articles={heroArticles}
+                  activeIndex={activeIndex}
+                  accentColor={activeColor.accent}
+                  onSelectArticle={(idx) => setActiveIndex(idx)}
+                  isAutoPlaying={isAutoPlaying}
+                  onToggleAutoPlay={() => setIsAutoPlaying(!isAutoPlaying)}
+                />
+              )}
             </div>
           </div>
 
-          {/* Bottom Bar: Quick Category Toggles & Additional Information CTA */}
-          <div className="relative z-10 pt-4 border-t border-white/15 flex flex-wrap items-center justify-between gap-4 text-xs">
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-              <span className="text-white/60 uppercase tracking-wider text-[10px] font-bold">Categories:</span>
-              {heroArticles.map((article, i) => (
-                <button
-                  key={article.id}
-                  onClick={() => setActiveIndex(i)}
-                  className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all ${
-                    i === activeIndex
-                      ? 'bg-white text-slate-900 font-bold shadow-xs'
-                      : 'text-white/75 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {article.category}
-                </button>
-              ))}
+          {/* Compact article selector and news-page link */}
+          <div className="relative z-10 grid min-w-0 grid-cols-1 items-center gap-3 border-t border-white/15 pt-4 text-xs lg:grid-cols-[minmax(0,1fr)_auto]">
+            <div className="flex min-w-0 items-center gap-2">
+              <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-white/60">Latest:</span>
+              <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto py-1 no-scrollbar">
+                {heroArticles.map((article, i) => (
+                  <button
+                    key={article.id}
+                    onClick={() => setActiveIndex(i)}
+                    title={article.title}
+                    aria-current={i === activeIndex ? 'true' : undefined}
+                    className={`max-w-40 shrink-0 truncate rounded-full px-2.5 py-1 text-[11px] font-medium transition-all sm:max-w-52 ${
+                      i === activeIndex
+                        ? 'bg-white font-bold text-slate-900 shadow-xs'
+                        : 'text-white/75 hover:bg-white/10 hover:text-white'
+                    }`}
+                  >
+                    {article.title}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Link for more detailed articles and additional information */}
             <button
               onClick={onGoToCompleteNews}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-300 hover:text-white transition-colors"
+              className="inline-flex shrink-0 items-center gap-1.5 justify-self-start whitespace-nowrap text-xs font-bold text-emerald-300 transition-colors hover:text-white lg:justify-self-end"
             >
-              <span>Explore All FMC Bulletins & Press Releases</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <span>Explore All News</span>
+              <ArrowRight className="h-3.5 w-3.5" />
             </button>
           </div>
 

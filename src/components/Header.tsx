@@ -337,7 +337,7 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
 
               <div className="flex flex-col">
-                <span className={`text-base sm:text-lg font-bold font-heading leading-tight tracking-tight transition-colors ${
+                <span className={`text-lg sm:text-lg font-bold font-heading leading-tight tracking-tight transition-colors ${
                   isDarkDetailView
                     ? 'text-white group-hover:text-emerald-300'
                     : 'text-slate-950 group-hover:text-emerald-800'
@@ -550,7 +550,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <Icon className={`w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0 transition-colors ${
                       item.active ? 'text-emerald-700' : 'text-emerald-600/80 group-hover:text-emerald-700'
                     }`} />
-                    <span className="text-xs sm:text-base lg:text-lg font-heading tracking-tight group-hover:translate-x-1 transition-transform">
+                    <span className="text-sm sm:text-base lg:text-lg font-heading tracking-tight group-hover:translate-x-1 transition-transform">
                       {item.label}
                     </span>
                   </div>
@@ -581,7 +581,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* 2. RIGHT CURTAIN PANEL (Slides in from the Right) */}
       <aside
         id="mobile-split-nav-right"
-        className={`fixed top-[52vh] sm:top-0 right-0 bottom-0 h-[48vh] sm:h-full w-full sm:w-1/2 lg:w-5/12 bg-linear-to-br from-emerald-950 via-emerald-900 to-slate-950 text-white z-[70] shadow-2xl flex flex-col justify-between p-4 sm:p-10 transition-transform duration-500 ease-out border-t-0 sm:border-t-0 sm:border-l border-emerald-800/40 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden transform ${
+        className={`fixed top-[52vh] sm:top-0 right-0 bottom-0 h-[48vh] sm:h-full w-full sm:w-1/2 lg:w-5/12 bg-linear-to-br from-emerald-950 via-emerald-900 to-slate-950 text-white z-[70] shadow-2xl flex flex-col justify-between px-4 pt-4 pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:p-10 transition-transform duration-500 ease-out border-t-0 sm:border-t-0 sm:border-l border-emerald-800/40 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden transform ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-label="Institutional Quick Hub Drawer"
@@ -637,16 +637,16 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Sign In Portal Action Button */}
-        <div className="pt-2.5 sm:pt-4 border-t border-white/10">
+        <div className="sticky bottom-0 -mx-4 px-4 pb-1 pt-3 bg-linear-to-t from-emerald-950 via-emerald-950/95 to-transparent sm:static sm:mx-0 sm:border-t sm:border-white/10 sm:bg-none sm:px-0 sm:pb-0 sm:pt-4">
           <button
             onClick={() => {
               setIsMobileMenuOpen(false);
               setIsPortalModalOpen(true);
             }}
-            className="w-full flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 rounded-xl bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
+            className="min-h-12 w-full flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-bold text-emerald-950 shadow-md transition-all hover:bg-emerald-50 cursor-pointer sm:text-sm"
           >
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>NHIS &amp; Staff Portal Sign In</span>
+            <span>Portal Sign In</span>
           </button>
         </div>
       </aside>
@@ -739,4 +739,3 @@ export const Header: React.FC<HeaderProps> = ({
     </>
   );
 };
-

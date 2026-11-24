@@ -41,3 +41,25 @@
 .transform-style-3d {
   transform-style: preserve-3d;
 }
+
+.news-article-content > * + * {
+  margin-top: 1rem;
+}
+
+.news-article-content a {
+  color: #047857;
+  text-decoration: underline;
+}
+
+.news-article-content ul,
+.news-article-content ol {
+  padding-left: 1.5rem;
+}
+
+.news-article-content ul {
+  list-style: disc;
+}
+
+.news-article-content ol {
+  list-style: decimal;
+}

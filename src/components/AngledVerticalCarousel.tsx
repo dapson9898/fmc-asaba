@@ -1,10 +1,12 @@
 import React from 'react';
-import { ChevronUp, ChevronDown, Clock, Play, Pause } from 'lucide-react';
+import { ChevronUp, ChevronDown, Play, Pause } from 'lucide-react';
 import { NewsArticle } from '../types';
+import { formatNewsDate, getNewsImage } from '../data/newsApi';
 
 interface AngledVerticalCarouselProps {
   articles: NewsArticle[];
   activeIndex: number;
+  accentColor: string;
   onSelectArticle: (index: number) => void;
   isAutoPlaying: boolean;
   onToggleAutoPlay: () => void;
@@ -13,6 +15,7 @@ interface AngledVerticalCarouselProps {
 export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
   articles,
   activeIndex,
+  accentColor,
   onSelectArticle,
   isAutoPlaying,
   onToggleAutoPlay,
@@ -21,15 +24,24 @@ export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (articles.length === 0) return;
     const nextIndex = (activeIndex - 1 + articles.length) % articles.length;
     onSelectArticle(nextIndex);
   };
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (articles.length === 0) return;
     const nextIndex = (activeIndex + 1) % articles.length;
     onSelectArticle(nextIndex);
   };
+  const visibleArticles = Array.from(
+    { length: Math.min(4, articles.length) },
+    (_, offset) => {
+      const index = (activeIndex + offset) % articles.length;
+      return { article: articles[index], index };
+    },
+  );
 
   return (
     <div
@@ -81,27 +93,27 @@ export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
             transformStyle: 'preserve-3d',
           }}
         >
-          {articles.map((article, idx) => {
-            const isActive = idx === activeIndex;
+          {visibleArticles.map(({ article, index }) => {
+            const isActive = index === activeIndex;
             return (
               <div
                 key={article.id}
-                id={`carousel-item-${idx}`}
-                onClick={() => onSelectArticle(idx)}
+                id={`carousel-item-${index}`}
+                onClick={() => onSelectArticle(index)}
                 className={`group relative cursor-pointer rounded-xl p-2 xl:p-3 transition-all duration-500 backdrop-blur-md border ${
                   isActive
                     ? 'bg-white/20 border-white/60 shadow-xl shadow-black/40 scale-102 translate-x-1.5'
                     : 'bg-black/30 border-white/10 hover:bg-white/10 hover:border-white/30 opacity-70 hover:opacity-95'
                 }`}
                 style={{
-                  boxShadow: isActive ? `0 10px 25px -5px ${article.gradient.glow}` : undefined
+                  boxShadow: isActive ? '0 10px 25px -5px rgba(0, 0, 0, 0.35)' : undefined
                 }}
               >
                 {/* Active Indicator Strip */}
                 {isActive && (
                   <div
                     className="absolute left-0 top-3 bottom-3 w-1.5 rounded-r-full bg-emerald-400"
-                    style={{ backgroundColor: article.gradient.accent }}
+                    style={{ backgroundColor: accentColor }}
                   />
                 )}
 
@@ -109,8 +121,8 @@ export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
                   {/* Thumbnail */}
                   <div className="relative w-11 h-11 xl:w-14 xl:h-14 rounded-lg overflow-hidden shrink-0 border border-white/20 shadow-xs">
                     <img
-                      src={article.image}
-                      alt={article.title}
+                      src={getNewsImage(article)}
+                      alt=""
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
@@ -129,11 +141,7 @@ export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
                             : 'bg-white/10 text-white/80 border-white/10'
                         }`}
                       >
-                        {article.category}
-                      </span>
-                      <span className="text-[10px] text-white/60 flex items-center gap-1">
-                        <Clock className="w-2.5 h-2.5" />
-                        {article.readTime}
+                        {formatNewsDate(article.created_at)}
                       </span>
                     </div>
 
@@ -151,8 +159,8 @@ export const AngledVerticalCarousel: React.FC<AngledVerticalCarouselProps> = ({
                 {isActive && isAutoPlaying && (
                   <div className="absolute bottom-0 left-3 right-3 h-0.5 bg-white/20 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-emerald-400 animate-[progress_6s_linear_infinite]"
-                      style={{ backgroundColor: article.gradient.accent }}
+                      className="h-full animate-[progress_5s_linear_infinite]"
+                      style={{ backgroundColor: accentColor }}
                     />
                   </div>
                 )}

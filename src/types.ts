@@ -1,26 +1,18 @@
 export interface NewsArticle {
-  id: string;
+  id: number;
   title: string;
-  subtitle?: string;
-  category: string;
-  categoryColor: string;
-  date: string;
-  readTime: string;
-  image: string;
-  author: string;
-  authorRole: string;
-  excerpt: string;
-  content: string[];
-  gradient: {
-    from: string;
-    via: string;
-    to: string;
-    accent: string;
-    glow: string;
-  };
-  keyTakeaway?: string;
-  tags: string[];
-  featuredInHero?: boolean;
+  summary: string;
+  content: string;
+  image_1?: string | null;
+  image_2?: string | null;
+  image_3?: string | null;
+  image_4?: string | null;
+  published: number;
+  published_by: number | null;
+  last_save_user: number | null;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
 }
 
 export type PortalRole = 'protocol' | 'it-admin';
