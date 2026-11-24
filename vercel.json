@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api/news",
+      "destination": "https://diplomatic-emerald-hare.198-54-125-32.cpanel.site/fmc_admin/api/news"
+    }
+  ]
+}

@@ -1,8 +1,10 @@
 import { NewsArticle } from '../types';
 import sampleNewsImage from '../assets/images/Sample_news.png';
 
-export const NEWS_API_URL =
+const DIRECT_NEWS_API_URL =
   'https://diplomatic-emerald-hare.198-54-125-32.cpanel.site/fmc_admin/api/news';
+
+export const NEWS_API_URL = import.meta.env.DEV ? DIRECT_NEWS_API_URL : '/api/news';
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null;
