@@ -66,7 +66,15 @@ export async function fetchNewsArticles(signal?: AbortSignal): Promise<NewsArtic
 
 export const getNewsImages = (article: NewsArticle): string[] =>
   [article.image_1, article.image_2, article.image_3, article.image_4]
-    .filter((image): image is string => typeof image === 'string' && image.trim().length > 0);
+    .filter((image): image is string => typeof image === 'string' && image.trim().length > 0)
+    .map((image) => {
+      const trimmedImage = image.trim();
+      const compactImage = trimmedImage.replace(/\s/g, '');
+
+      return /^\/9j\/[A-Za-z0-9+/]*={0,2}$/.test(compactImage)
+        ? `data:image/jpeg;base64,${compactImage}`
+        : trimmedImage;
+    });
 
 export const getNewsImage = (article: NewsArticle, index = 0): string =>
   getNewsImages(article)[index] ?? sampleNewsImage;
