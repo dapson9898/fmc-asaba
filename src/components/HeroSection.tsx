@@ -50,18 +50,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const activeArticle = heroArticles[activeIndex];
   const activeColor = HERO_COLORS[activeIndex % HERO_COLORS.length];
 
-  const [isDesktop, setIsDesktop] = React.useState<boolean>(() => {
-    return typeof window !== 'undefined' ? window.innerWidth >= 1024 : true;
-  });
-
-  React.useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   // Auto-scroll sliding timer
   React.useEffect(() => {
     if (!isAutoPlaying || heroArticles.length <= 1) return;
@@ -105,17 +93,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {/* =========================================================================
             LEFT-HAND SIDE (WELCOME MESSAGE & MD WELCOME - FAITHFUL TO FMC REFERENCE)
-            Seamlessly displays the active news color as a smooth gradient that flows
-            directly into the news section with zero margin or jarring demarcation
+            Displays the welcome content on a solid background, separated from the news section
             ========================================================================= */}
         <div
           id="hero-left-side"
-          className="w-full lg:w-[44%] xl:w-[42%] lg:shrink-0 relative z-10 flex flex-col justify-center px-6 sm:px-10 lg:pl-8 lg:pr-6 xl:pl-12 xl:pr-8 py-8 lg:py-6 transition-all duration-1000 ease-in-out"
-          style={{
-            background: isDesktop
-              ? `linear-gradient(to right, #f8fafc 0%, #f8fafc 25%, ${activeColor.from}15 55%, ${activeColor.from}45 80%, ${activeColor.from} 100%)`
-              : `linear-gradient(to bottom, #f8fafc 0%, #f8fafc 35%, ${activeColor.from}20 70%, ${activeColor.from} 100%)`,
-          }}
+          className="w-full lg:w-[44%] xl:w-[42%] lg:shrink-0 relative z-10 flex flex-col justify-center bg-slate-50 px-6 sm:px-10 lg:pl-8 lg:pr-6 xl:pl-12 xl:pr-8 py-8 lg:py-6"
         >
           {/* Subtle Organic Atmospheric Glow Shapes in Left Background matching active article */}
           <div

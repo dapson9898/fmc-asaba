@@ -313,10 +313,10 @@ export const Header: React.FC<HeaderProps> = ({
     <>
             <header
         id="fmc-header"
-        className={`fixed inset-x-0 top-0 z-50 w-full transition-all duration-500 ease-in-out ${
+        className={`fixed inset-x-0 top-0 z-50 w-full border-b-4 border-slate-400 transition-all duration-500 ease-in-out ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-md border-b-4 border-slate-400 shadow-[0_3px_12px_rgba(15,23,42,0.90)] py-0'
-            : 'bg-transparent border-b-2 border-transparent shadow-none py-1 sm:py-2'
+            ? 'bg-white/95 backdrop-blur-md shadow-[0_3px_12px_rgba(15,23,42,0.90)] py-0'
+            : 'bg-transparent shadow-none py-0'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -327,11 +327,11 @@ export const Header: React.FC<HeaderProps> = ({
               className="flex items-center gap-3 cursor-pointer group"
               onClick={handleHomeClick}
             >
-              <div className="relative flex items-center justify-center w-12 h-12 rounded-full border-2 border-emerald-600/60 bg-white p-0.5 shadow-sm group-hover:scale-105 transition-all duration-300 shrink-0">
+              <div className="relative flex items-center justify-center w-16 h-12 rounded-full group-hover:scale-105 transition-all duration-300 shrink-0">
                 <img
                   src={fmcLogoOfficial}
                   alt="Federal Medical Centre Asaba Official Crest"
-                  className="w-full h-full object-cover rounded-full"
+                  className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -506,11 +506,11 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Top Header inside Left Drawer */}
         <div>
           <div className="flex items-center gap-2.5 sm:gap-3 pb-3 sm:pb-6 border-b border-slate-100">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border-2 border-emerald-600 flex items-center justify-center p-0.5 shrink-0 shadow-xs">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0">
               <img
                 src={fmcLogoOfficial}
                 alt="Federal Medical Centre Asaba Official Crest"
-                className="w-full h-full object-cover rounded-full"
+                className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />
             </div>

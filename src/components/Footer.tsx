@@ -183,11 +183,11 @@ export const Footer: React.FC<FooterProps> = ({
 
             {/* Official FMC Asaba Delta State Crest */}
             <div className="pt-2 flex items-center gap-3">
-              <div className="w-14 h-14 rounded-full bg-white border-2 border-emerald-600/50 p-0.5 shadow-sm overflow-hidden shrink-0">
+              <div className="w-14 h-14 rounded-full overflow-hidden shrink-0">
                 <img
                   src={fmcLogoOfficial}
                   alt="Federal Medical Centre Asaba Delta State Official Crest"
-                  className="w-full h-full object-cover rounded-full"
+                  className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
                 />
               </div>
